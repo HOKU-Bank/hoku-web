@@ -94,7 +94,7 @@ export function Platform() {
   return (
     <section id="platform" className="relative overflow-hidden px-6 py-36">
       {/* light behind the glass */}
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-[55%] h-[520px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.07] blur-[120px]" />
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-[55%] h-[520px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--orb)] opacity-70 blur-[120px]" />
 
       <div className="relative mx-auto max-w-6xl">
         <Reveal className="mx-auto max-w-3xl text-center">
@@ -194,7 +194,7 @@ export function Team() {
           {TEAM.map((m, i) => (
             <Reveal key={m.name} delay={i * 0.08}>
               <div className="glass group h-full rounded-3xl p-3">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                <div data-theme="dark" className="relative aspect-[4/5] overflow-hidden rounded-2xl text-white">
                   <img
                     src={m.photo}
                     alt={m.name}
@@ -246,7 +246,7 @@ export function Footer() {
     <footer className="border-t border-white/10 px-6 py-14 text-sm text-white/45">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:justify-between">
         <div className="max-w-md">
-          <img src="/horaizon-logo.png" alt="Horaizon" className="h-4 w-auto opacity-80" />
+          <img src="/horaizon-logo.png" alt="Horaizon" className="theme-logo h-4 w-auto opacity-80" />
           <p className="mt-5 leading-relaxed">
             Horaizon is preparing an application for a credit institution licence
             and does not currently provide banking or other regulated services.

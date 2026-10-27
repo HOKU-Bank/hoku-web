@@ -73,7 +73,7 @@ export function Hero() {
           className="absolute inset-x-[-50%] bottom-[-20%] h-[160%] origin-bottom [transform:rotateX(62deg)]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.10) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.10) 1px, transparent 1px)",
+              "linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)",
             backgroundSize: "64px 64px",
             maskImage: "linear-gradient(to top, black 10%, transparent 80%)",
             WebkitMaskImage: "linear-gradient(to top, black 10%, transparent 80%)",
@@ -82,7 +82,7 @@ export function Hero() {
         />
       </div>
       {/* horizon line */}
-      <div className="absolute inset-x-0 bottom-[-55vw] -z-10 mx-auto h-[80vw] w-[140vw] -translate-x-[14vw] rounded-[100%] border-t border-white/20 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.10),transparent_60%)]" />
+      <div className="absolute inset-x-0 bottom-[-55vw] -z-10 mx-auto h-[80vw] w-[140vw] -translate-x-[14vw] rounded-[100%] border-t border-white/20 bg-[radial-gradient(ellipse_at_top,var(--orb),transparent_60%)]" />
 
       <motion.div
         style={{ opacity: fade }}
@@ -131,7 +131,7 @@ export function Hero() {
           >
             <a
               href="#access"
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#0b0b0f] transition hover:bg-white/90"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/90"
             >
               Get early access
               <span className="transition group-hover:translate-x-0.5">→</span>
@@ -195,7 +195,7 @@ export function Hero() {
           <motion.div
             animate={{ scale: [1, 0.85, 1], opacity: [0.6, 0.35, 0.6] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-0 left-1/2 h-10 w-72 -translate-x-1/2 rounded-[100%] bg-black/80 blur-2xl"
+            className="absolute bottom-0 left-1/2 h-10 w-72 -translate-x-1/2 rounded-[100%] bg-[rgba(0,0,0,0.55)] blur-2xl"
           />
         </motion.div>
       </motion.div>

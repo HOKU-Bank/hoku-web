@@ -140,7 +140,7 @@ export function WaitlistForm() {
                     onClick={() => setHasBusiness(val as boolean)}
                     aria-pressed={hasBusiness === val}
                     className={`relative h-10 rounded-lg text-sm font-medium transition ${
-                      hasBusiness === val ? "text-[#0b0b0f]" : "text-white/70 hover:text-white"
+                      hasBusiness === val ? "text-black" : "text-white/70 hover:text-white"
                     }`}
                   >
                     {hasBusiness === val && (
@@ -196,7 +196,7 @@ export function WaitlistForm() {
                         <select name="sector" required defaultValue="" className={`${inputClass} appearance-none pr-10 invalid:text-white/35`}>
                           <option value="" disabled>Choose a sector</option>
                           {SECTORS.map((sec) => (
-                            <option key={sec} value={sec} className="bg-[#0b0b0f] text-white">{sec}</option>
+                            <option key={sec} value={sec} className="bg-[var(--ink)] text-white">{sec}</option>
                           ))}
                         </select>
                         <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-white/45">▾</span>
@@ -223,7 +223,7 @@ export function WaitlistForm() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="group mt-2 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-[#0b0b0f] transition hover:bg-white/90 disabled:opacity-60"
+              className="group mt-2 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-black transition hover:bg-white/90 disabled:opacity-60"
             >
               {status === "sending" ? "Joining…" : "Get early access"}
               <span className="transition group-hover:translate-x-0.5">→</span>

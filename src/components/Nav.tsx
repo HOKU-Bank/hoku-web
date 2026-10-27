@@ -21,7 +21,7 @@ export function Nav() {
         }`}
       >
         <a href="#" aria-label="Horaizon home">
-          <img src="/horaizon-logo.png" alt="Horaizon" className="h-[26px] w-auto sm:h-[30px]" />
+          <img src="/horaizon-logo.png" alt="Horaizon" className="theme-logo h-[26px] w-auto sm:h-[30px]" />
         </a>
         <div className="hidden items-center gap-8 text-sm text-white/65 md:flex">
           <a href="#autopilot" className="transition hover:text-white">Autopilot</a>
@@ -30,7 +30,7 @@ export function Nav() {
         </div>
         <a
           href="#access"
-          className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#0b0b0f] transition hover:bg-white/90"
+          className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-white/90"
         >
           Early access
         </a>

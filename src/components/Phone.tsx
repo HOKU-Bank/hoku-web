@@ -13,7 +13,7 @@ export function Phone({
 }) {
   return (
     <div
-      className={`relative aspect-[9/19.2] w-[300px] rounded-[52px] bg-[linear-gradient(145deg,#a3a3aa_0%,#4c4c54_18%,#2c2c31_50%,#4c4c54_82%,#a3a3aa_100%)] p-[3px] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.9)] ${className}`}
+      className={`relative aspect-[9/19.2] w-[300px] rounded-[52px] bg-[linear-gradient(145deg,#a3a3aa_0%,#4c4c54_18%,#2c2c31_50%,#4c4c54_82%,#a3a3aa_100%)] p-[3px] shadow-[var(--phone-shadow)] ${className}`}
     >
       {/* black glass border around the display */}
       <div className="h-full w-full rounded-[49px] bg-black p-[7px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
@@ -212,7 +212,7 @@ export function Phone3D({
   angle?: MotionValue<number>;
 }) {
   return (
-    <div className="relative" style={{ transformStyle: "preserve-3d" }}>
+    <div data-theme="dark" className="relative text-white" style={{ transformStyle: "preserve-3d" }}>
       {/* extruded rim */}
       {Array.from({ length: LAYERS }, (_, i) => {
         const z = -DEPTH / 2 + ((i + 0.5) * DEPTH) / LAYERS;

@@ -9,6 +9,99 @@
   --magenta: #6c707a;
 }
 
+/* ------------------------------------------------------------------ */
+/* Themes. Utilities like text-white / bg-black read --color-white and  */
+/* --color-black, so the light theme simply swaps them; anything that   */
+/* must stay dark (the phone) opts back in with data-theme="dark".      */
+/* ------------------------------------------------------------------ */
+
+:root,
+[data-theme="dark"] {
+  --color-white: #fff;
+  --color-black: #000;
+  --ink: #050505;
+  --line: rgba(255, 255, 255, 0.1);
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+  --lg-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.035) 55%, rgba(255, 255, 255, 0.06) 100%);
+  --lg-border: rgba(255, 255, 255, 0.14);
+  --lg-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -1px 0 rgba(255, 255, 255, 0.06), inset 0 0 40px rgba(255, 255, 255, 0.03), 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+  --lg-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.12) 0%, transparent 28%, transparent 70%, rgba(255, 255, 255, 0.05) 100%);
+  --text-grad: linear-gradient(100deg, #ffffff 0%, #d9dce3 30%, #8f939d 55%, #f4f5f7 78%, #a9adb7 100%);
+  --aurora-1: rgba(255, 255, 255, 0.2);
+  --aurora-2: rgba(200, 205, 215, 0.16);
+  --aurora-3: rgba(255, 255, 255, 0.1);
+  --grid-line: rgba(255, 255, 255, 0.1);
+  --orb: rgba(255, 255, 255, 0.12);
+  --spot: rgba(255, 255, 255, 0.09);
+  --glow-1: #3b3d46;
+  --glow-2: #2c2e35;
+  --glow-3: #45474f;
+  --glow-4: #34363d;
+  --logo-filter: none;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --color-white: #0b0b0f;
+  --color-black: #ffffff;
+  --ink: #f4f4f6;
+  --line: rgba(0, 0, 0, 0.08);
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 20px 50px -24px rgba(20, 24, 40, 0.25);
+  --lg-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.62) 55%, rgba(255, 255, 255, 0.78) 100%);
+  --lg-border: rgba(255, 255, 255, 0.9);
+  --lg-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), inset 0 -1px 0 rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.05), 0 30px 70px -30px rgba(20, 24, 40, 0.3);
+  --lg-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.9) 0%, transparent 30%, transparent 70%, rgba(255, 255, 255, 0.5) 100%);
+  --text-grad: linear-gradient(100deg, #0b0b0f 0%, #3a3d46 35%, #8a8f99 58%, #1f2127 80%, #5d616b 100%);
+  --aurora-1: rgba(190, 205, 235, 0.55);
+  --aurora-2: rgba(225, 215, 240, 0.5);
+  --aurora-3: rgba(200, 225, 235, 0.45);
+  --grid-line: rgba(0, 0, 0, 0.07);
+  --orb: rgba(170, 185, 215, 0.35);
+  --spot: rgba(120, 140, 190, 0.12);
+  --glow-1: #dfe5f1;
+  --glow-2: #e3eaf2;
+  --glow-3: #e8e2f2;
+  --glow-4: #e6e9ef;
+  --logo-filter: invert(1);
+  color-scheme: light;
+}
+
+[data-theme="aurora"] {
+  --color-white: #fff;
+  --color-black: #000;
+  --ink: #050816;
+  --line: rgba(255, 255, 255, 0.1);
+  --text-grad: linear-gradient(100deg, #fff 0%, #c9d8ff 40%, #b4a8ff 70%, #f0a6d4 100%);
+  --aurora-1: #3d55e0;
+  --aurora-2: #8a5cf0;
+  --aurora-3: #d45aa8;
+  --grid-line: rgba(160, 150, 255, 0.22);
+  --orb: rgba(139, 124, 255, 0.25);
+  --spot: rgba(180, 168, 255, 0.14);
+  --glow-1: #3b4cc0;
+  --glow-2: #2a6fb0;
+  --glow-3: #7a4fd6;
+  --glow-4: #b04a90;
+  --logo-filter: none;
+  color-scheme: dark;
+}
+
+/* Kept out of the dark block above so the phone (which re-enters the dark
+   theme) still picks up the page's shadow strength. */
+:root {
+  --phone-shadow: 0 60px 120px -30px rgba(0, 0, 0, 0.9);
+}
+
+html[data-theme="light"] {
+  --phone-shadow: 0 50px 90px -40px rgba(20, 24, 40, 0.45);
+}
+
+.theme-logo {
+  filter: var(--logo-filter);
+}
+
 @theme inline {
   --color-ink: var(--ink);
   --color-navy: var(--navy);
@@ -22,12 +115,12 @@
 
 html {
   background: var(--ink);
-  color-scheme: dark;
 }
 
 body {
   background: var(--ink);
-  color: #fff;
+  color: var(--color-white);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 ::selection {
@@ -37,15 +130,11 @@ body {
 /* "Liquid glass": heavier blur, specular rim and a soft sheen */
 .liquid-glass {
   position: relative;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.035) 55%, rgba(255, 255, 255, 0.06) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: var(--lg-bg);
+  border: 1px solid var(--lg-border);
   backdrop-filter: blur(40px) saturate(170%);
   -webkit-backdrop-filter: blur(40px) saturate(170%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
-    inset 0 0 40px rgba(255, 255, 255, 0.03),
-    0 30px 80px -30px rgba(0, 0, 0, 0.8);
+  box-shadow: var(--lg-shadow);
 }
 
 .liquid-glass::before {
@@ -54,26 +143,20 @@ body {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.12) 0%, transparent 28%, transparent 70%, rgba(255, 255, 255, 0.05) 100%);
+  background: var(--lg-sheen);
 }
 
 /* Frosted glass panel used across the page */
 .glass {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.09) 0%,
-    rgba(255, 255, 255, 0.03) 100%
-  );
+  background: var(--glass-bg);
   border: 1px solid var(--line);
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 20px 60px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--glass-shadow);
 }
 
 .text-gradient {
-  background: linear-gradient(100deg, #ffffff 0%, #d9dce3 30%, #8f939d 55%, #f4f5f7 78%, #a9adb7 100%);
+  background: var(--text-grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -98,7 +181,7 @@ body {
 .spotlight {
   background-image: radial-gradient(
     420px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(255, 255, 255, 0.09),
+    var(--spot),
     transparent 60%
   );
 }

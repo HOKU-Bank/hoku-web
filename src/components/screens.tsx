@@ -196,7 +196,7 @@ export function ChatScreen({ title, messages }: { title: string; messages: ChatM
               className={m.from === "user" ? "self-end" : "self-start"}
             >
               {m.from === "user" && (
-                <p className="max-w-[210px] rounded-2xl rounded-br-md bg-white text-[#0b0b0f] px-3 py-2 text-[11.5px] leading-snug">
+                <p className="max-w-[210px] rounded-2xl rounded-br-md bg-white text-black px-3 py-2 text-[11.5px] leading-snug">
                   {m.text}
                 </p>
               )}
@@ -266,7 +266,7 @@ export function ChatCard({
           animate={tapped && cta && !confirmed ? { scale: [1, 0.95, 1] } : { scale: 1 }}
           transition={{ duration: 0.35 }}
           className={`relative mt-2.5 rounded-xl py-1.5 text-center text-[11px] font-semibold transition-colors duration-500 ${
-            confirmed ? "bg-emerald-400/20 text-emerald-300" : cta ? "bg-white text-[#0b0b0f]" : "bg-white/10 text-white/60"
+            confirmed ? "bg-emerald-400/20 text-emerald-300" : cta ? "bg-white text-black" : "bg-white/10 text-white/60"
           }`}
         >
           {/* tap ripple: rings spreading like a stone dropped in water */}

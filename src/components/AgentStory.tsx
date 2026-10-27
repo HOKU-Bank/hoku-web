@@ -141,8 +141,8 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
     <div ref={ref} className="flex min-h-[85vh] flex-col justify-center">
       <div className="relative">
         {/* light behind the glass so the frosting has something to bend */}
-        <div aria-hidden className="pointer-events-none absolute -left-10 top-6 h-40 w-40 rounded-full bg-white/[0.14] blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-6 right-6 h-32 w-56 rounded-full bg-white/[0.08] blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -left-10 top-6 h-40 w-40 rounded-full bg-[var(--orb)] blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-6 right-6 h-32 w-56 rounded-full bg-[var(--orb)] opacity-60 blur-3xl" />
 
         <motion.div
           initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
@@ -186,7 +186,7 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
   );
 }
 
-const GLOWS = ["#3b3d46", "#2c2e35", "#45474f", "#34363d"];
+const GLOWS = ["var(--glow-1)", "var(--glow-2)", "var(--glow-3)", "var(--glow-4)"];
 
 // Desktop: a sticky phone that turns a full revolution between scenes.
 // The screen swaps while its back is facing the viewer.
