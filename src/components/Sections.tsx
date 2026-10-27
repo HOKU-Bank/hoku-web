@@ -98,7 +98,7 @@ export function Platform() {
 
       <div className="relative mx-auto max-w-6xl">
         <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/50">One account</p>
+          <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">One account</p>
           <h2 className="mt-5 text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[1] tracking-[-0.045em]">
             Banking and credit,
             <br />
@@ -126,18 +126,18 @@ export function Platform() {
                 <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="relative flex items-center justify-between">
                   <span className="grid h-14 w-14 place-items-center rounded-2xl border border-white/15 bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]">
-                    <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg viewBox="0 0 24 24" className="accent-text h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       {ICONS[p.tag]}
                     </svg>
                   </span>
                   <span className="font-mono text-xs text-white/40">0{i + 1}</span>
                 </div>
-                <p className="relative mt-8 text-sm font-medium uppercase tracking-[0.18em] text-white/55">{p.tag}</p>
+                <p className="accent-text relative mt-8 text-sm font-medium uppercase tracking-[0.18em]">{p.tag}</p>
                 <h3 className="relative mt-3 text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.025em]">{p.title}</h3>
                 <ul className="relative mt-8 space-y-3.5">
                   {p.points.map((pt) => (
                     <li key={pt} className="flex items-center gap-3 text-[15px] text-white/80">
-                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white/10 text-[10px]">✓</span>
+                      <span className="accent-pill grid h-5 w-5 shrink-0 place-items-center rounded-full border text-[10px]">✓</span>
                       {pt}
                     </li>
                   ))}
@@ -183,7 +183,7 @@ export function Team() {
     <section id="team" className="relative px-6 py-32">
       <div className="mx-auto max-w-6xl">
         <Reveal className="text-center">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/45">Team</p>
+          <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">Team</p>
           <h2 className="mx-auto mt-5 max-w-3xl text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
             100+ years of banking,{" "}
             <span className="text-gradient">led by founders who scaled credit tech.</span>

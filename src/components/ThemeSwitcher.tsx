@@ -7,6 +7,7 @@ export const THEMES = [
   { id: "dark", label: "Dark", swatch: "linear-gradient(135deg,#2a2b30,#050505)" },
   { id: "light", label: "Light", swatch: "linear-gradient(135deg,#ffffff,#dfe3ea)" },
   { id: "aurora", label: "Aurora", swatch: "linear-gradient(135deg,#3d55e0,#8a5cf0 55%,#d45aa8)" },
+  { id: "deck", label: "Deck", swatch: "linear-gradient(135deg,#375b67,#0d2d51 50%,#8ad1c9)" },
 ] as const;
 
 export type ThemeId = (typeof THEMES)[number]["id"];

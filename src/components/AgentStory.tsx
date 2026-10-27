@@ -152,7 +152,7 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
           className="liquid-glass rounded-[32px] p-8 sm:p-10"
         >
           <div className="flex items-center justify-between">
-            <span className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-xs font-medium tracking-wide text-white/80">
+            <span className="accent-pill rounded-full border px-3 py-1 text-xs font-medium tracking-wide">
               {scene.eyebrow}
             </span>
             <span className="font-mono text-xs text-white/35">0{index + 1} / 0{SCENES.length}</span>
@@ -270,7 +270,7 @@ export function AgentStory() {
     <section id="autopilot" className="relative py-32">
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/45">Horaizon Autopilot</p>
+          <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">Horaizon Autopilot</p>
           <h2 className="mt-5 text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
             Your finance back office,{" "}
             <span className="text-gradient">on autopilot.</span>

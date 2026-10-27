@@ -88,6 +88,37 @@
   color-scheme: dark;
 }
 
+/* Colours sampled from the investor deck: navy-to-petrol backdrop, steel
+   blue and misty lavender light, mint (#8ad1c9) card borders and accents. */
+[data-theme="deck"] {
+  --color-white: #fff;
+  --color-black: #020c24;
+  --ink: #020a1f;
+  --line: rgba(138, 209, 201, 0.22);
+  --sky: #8ad1c9;
+  --violet: #add4d2;
+  --magenta: #546f96;
+  --glass-bg: linear-gradient(180deg, rgba(20, 52, 96, 0.55) 0%, rgba(8, 28, 62, 0.4) 100%);
+  --glass-shadow: inset 0 1px 0 rgba(173, 212, 210, 0.15), 0 20px 60px -20px rgba(0, 4, 20, 0.7);
+  --lg-bg: linear-gradient(160deg, rgba(36, 72, 120, 0.42) 0%, rgba(10, 34, 72, 0.32) 55%, rgba(30, 64, 104, 0.38) 100%);
+  --lg-border: rgba(138, 209, 201, 0.5);
+  --lg-shadow: inset 0 1px 0 rgba(173, 212, 210, 0.3), inset 0 0 40px rgba(138, 209, 201, 0.04), 0 30px 80px -30px rgba(0, 4, 20, 0.85);
+  --lg-sheen: linear-gradient(120deg, rgba(173, 212, 210, 0.12) 0%, transparent 28%, transparent 70%, rgba(138, 209, 201, 0.06) 100%);
+  --text-grad: linear-gradient(100deg, #ffffff 0%, #d7ece9 35%, #8ad1c9 65%, #c3d2d7 100%);
+  --aurora-1: #375b67;
+  --aurora-2: #546f96;
+  --aurora-3: #6d6581;
+  --grid-line: rgba(138, 209, 201, 0.14);
+  --orb: rgba(84, 111, 150, 0.45);
+  --spot: rgba(138, 209, 201, 0.14);
+  --glow-1: #1a3c5d;
+  --glow-2: #375b67;
+  --glow-3: #324b73;
+  --glow-4: #546f96;
+  --logo-filter: none;
+  color-scheme: dark;
+}
+
 /* Kept out of the dark block above so the phone (which re-enters the dark
    theme) still picks up the page's shadow strength. */
 :root {
@@ -96,6 +127,19 @@
 
 html[data-theme="light"] {
   --phone-shadow: 0 50px 90px -40px rgba(20, 24, 40, 0.45);
+}
+
+/* Accent: neutral in the mono themes, the deck's mint in "deck". */
+:root { --accent: rgba(255, 255, 255, 0.55); --accent-strong: rgba(255, 255, 255, 0.85); }
+html[data-theme="light"] { --accent: rgba(11, 11, 15, 0.55); --accent-strong: rgba(11, 11, 15, 0.85); }
+html[data-theme="aurora"] { --accent: #b4a8ff; --accent-strong: #d4ccff; }
+html[data-theme="deck"] { --accent: #8ad1c9; --accent-strong: #add4d2; }
+
+.accent-text { color: var(--accent); }
+.accent-pill {
+  color: var(--accent-strong);
+  border-color: color-mix(in oklab, var(--accent) 50%, transparent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
 }
 
 .theme-logo {
