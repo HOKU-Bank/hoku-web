@@ -110,7 +110,7 @@ export function Platform() {
               >
                 <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className={`absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br ${p.accent} to-transparent opacity-60 blur-3xl transition-opacity duration-500 group-hover:opacity-100`} />
-                <p className="relative font-mono text-xs uppercase tracking-[0.18em] text-white/50">0{i + 1} — {p.tag}</p>
+                <p className="relative font-mono text-xs uppercase tracking-[0.18em] text-white/50">0{i + 1} / {p.tag}</p>
                 <h3 className="relative mt-6 text-2xl font-semibold tracking-tight">{p.title}</h3>
                 <ul className="relative mt-8 space-y-3">
                   {p.points.map((pt) => (

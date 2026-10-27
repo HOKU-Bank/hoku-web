@@ -27,7 +27,7 @@ const SCENES: Scene[] = [
     id: "payables",
     eyebrow: "Payables",
     title: "Invoices pay themselves.",
-    body: "Autopilot matches every invoice, verifies the payee and pays on the due date — never early, never late, always inside your approval rules.",
+    body: "Autopilot matches every invoice, verifies the payee and pays on the due date. Never early, never late, always inside your approval rules.",
     stat: ["€13.5K", "saved a year at 200 invoices a month"],
     chatTitle: "Payables · active",
     messages: [
@@ -54,7 +54,7 @@ const SCENES: Scene[] = [
     id: "treasuries",
     eyebrow: "Treasuries Autopilot",
     title: "Idle cash goes to work.",
-    body: "Anything above your operating buffer is swept into treasuries and hedged — then pulled back the moment you need it.",
+    body: "Anything above your operating buffer is swept into treasuries and hedged, then pulled back the moment you need it.",
     stat: ["€9K", "earned a year on €500K of surplus cash"],
     chatTitle: "Treasuries · active",
     messages: [
@@ -74,14 +74,14 @@ const SCENES: Scene[] = [
         ),
       },
       { from: "user", text: "Keep €200K liquid for payroll." },
-      { from: "agent", text: "Done. Buffer updated — I'll sweep around it from now on." },
+      { from: "agent", text: "Done. Buffer updated, I'll sweep around it from now on." },
     ],
   },
   {
     id: "contract",
     eyebrow: "Contract-to-Cash",
     title: "An order becomes capital.",
-    body: "Win a contract and Autopilot turns it into a working-capital facility, a guarantee and an FX hedge — inside pre-approved limits.",
+    body: "Win a contract and Autopilot turns it into a working-capital facility, a guarantee and an FX hedge, inside pre-approved limits.",
     stat: ["24h", "from order to facility"],
     chatTitle: "Contract-to-Cash · active",
     messages: [
@@ -108,11 +108,11 @@ const SCENES: Scene[] = [
     id: "runway",
     eyebrow: "Runway Autopilot",
     title: "Capital, before you ask.",
-    body: "When runway drops below the threshold you set, a pre-assessed venture debt offer is already waiting — to bridge you to the next round.",
+    body: "When runway drops below the threshold you set, a pre-assessed venture debt offer is already waiting to bridge you to the next round.",
     stat: ["9 mo", "runway trigger, set by you"],
     chatTitle: "Runway · monitoring",
     messages: [
-      { from: "agent", text: "Heads up — runway just dropped to 9 months, your trigger." },
+      { from: "agent", text: "Heads up: runway just dropped to 9 months, your trigger." },
       { from: "agent", text: "I've prepared a venture debt offer to bridge you to Series A:" },
       {
         from: "card",
@@ -267,7 +267,7 @@ export function AgentStory() {
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg text-white/60">
             Tell it what you want in plain language. Agents act 24/7 within the
-            mandate your CFO sets once — and every action is logged.
+            mandate your CFO sets once, and every action is logged.
           </p>
         </div>
 

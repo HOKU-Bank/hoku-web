@@ -119,7 +119,7 @@ export function Hero() {
             className="mx-auto mt-7 max-w-md text-lg leading-relaxed text-white/65 lg:mx-0"
           >
             Agentic banking and credit for Europe&apos;s innovators. Set the
-            mandate once — Autopilot pays, collects, invests and finds you
+            mandate once. Autopilot pays, collects, invests and finds you
             capital, around the clock.
           </motion.p>
 
