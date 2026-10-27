@@ -11,11 +11,33 @@ const SUPABASE_KEY = "sb_publishable_gcLU2auUlyQo1wpi7tFOAA_gsHxnZ7D";
 
 type Status = "idle" | "sending" | "done" | "error";
 
+const BUSINESS_TYPES = [
+  ["startup", "Startup"],
+  ["scaleup", "Scale-up"],
+  ["sme", "SME"],
+  ["other", "Other"],
+] as const;
+
+const SECTORS = [
+  "AI & software",
+  "Robotics",
+  "Aerospace & space",
+  "Defence & dual-use",
+  "Energy & climate",
+  "Semiconductors",
+  "Cybersecurity",
+  "Manufacturing & industrial",
+  "Fintech",
+  "Health & biotech",
+  "Other",
+];
+
 const inputClass =
   "h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-[15px] text-white placeholder:text-white/35 outline-none transition focus:border-[#b4a8ff]/60 focus:bg-white/[0.07] focus:ring-4 focus:ring-[#8b7cff]/15";
 
 export function WaitlistForm() {
   const [hasBusiness, setHasBusiness] = useState<boolean | null>(null);
+  const [businessType, setBusinessType] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
@@ -26,6 +48,10 @@ export function WaitlistForm() {
       setError("Let us know whether you run a business.");
       return;
     }
+    if (hasBusiness && !businessType) {
+      setError("Tell us what kind of company you run.");
+      return;
+    }
     setError("");
     setStatus("sending");
 
@@ -34,6 +60,8 @@ export function WaitlistForm() {
       email: String(form.get("email")).trim().toLowerCase(),
       has_business: hasBusiness,
       company: hasBusiness ? String(form.get("company") ?? "").trim() || null : null,
+      business_type: hasBusiness ? businessType : null,
+      sector: hasBusiness ? String(form.get("sector") ?? "") || null : null,
       consent: form.get("consent") === "on",
       source: "website",
     };
@@ -130,15 +158,52 @@ export function WaitlistForm() {
 
             <AnimatePresence initial={false}>
               {hasBusiness && (
-                <motion.label
+                <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="block overflow-hidden"
+                  className="space-y-4 overflow-hidden"
                 >
-                  <span className="mb-1.5 block pt-0.5 text-sm text-white/60">Company name</span>
-                  <input name="company" maxLength={160} autoComplete="organization" placeholder="Acme Robotics" className={inputClass} />
-                </motion.label>
+                  <fieldset className="pt-0.5">
+                    <legend className="mb-1.5 text-sm text-white/60">What kind of company?</legend>
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                      {BUSINESS_TYPES.map(([val, label]) => (
+                        <button
+                          key={val}
+                          type="button"
+                          onClick={() => setBusinessType(val)}
+                          aria-pressed={businessType === val}
+                          className={`h-10 rounded-lg border text-sm font-medium transition ${
+                            businessType === val
+                              ? "border-[#b4a8ff]/70 bg-[#8b7cff]/20 text-white"
+                              : "border-white/10 bg-white/[0.03] text-white/65 hover:border-white/25 hover:text-white"
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <label className="block">
+                      <span className="mb-1.5 block text-sm text-white/60">Company name</span>
+                      <input name="company" maxLength={160} autoComplete="organization" placeholder="Acme Robotics" className={inputClass} />
+                    </label>
+                    <label className="block">
+                      <span className="mb-1.5 block text-sm text-white/60">Sector</span>
+                      <div className="relative">
+                        <select name="sector" required defaultValue="" className={`${inputClass} appearance-none pr-10 invalid:text-white/35`}>
+                          <option value="" disabled>Choose a sector</option>
+                          {SECTORS.map((sec) => (
+                            <option key={sec} value={sec} className="bg-[#0a1030] text-white">{sec}</option>
+                          ))}
+                        </select>
+                        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-white/45">▾</span>
+                      </div>
+                    </label>
+                  </div>
+                </motion.div>
               )}
             </AnimatePresence>
 

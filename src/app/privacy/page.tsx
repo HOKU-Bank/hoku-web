@@ -22,8 +22,9 @@ export default function Privacy() {
         <p>
           <strong className="text-white">Early access list.</strong> When you join
           the early access list we process your name, e-mail address, whether you
-          run a business and, optionally, your company name. We use this data only
-          to contact you about early access to Horaizon, on the basis of your
+          run a business and, if you do, its type, sector and (optionally) name.
+          We use this data only to contact you about early access to Horaizon
+          and to tailor that communication to your kind of company, on the basis of your
           consent (Art. 6(1)(a) GDPR). You can withdraw consent at any time by
           writing to us, and we will delete your data. Otherwise we keep it until
           early access opens and no longer than 24 months.
