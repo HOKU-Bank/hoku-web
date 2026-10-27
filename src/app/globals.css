@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #050816;
+  --navy: #0a1030;
+  --line: rgba(255, 255, 255, 0.1);
+  --sky: #8ec5ff;
+  --violet: #8b7cff;
+  --magenta: #e05ba8;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-navy: var(--navy);
+  --color-sky: var(--sky);
+  --color-violet: var(--violet);
+  --color-magenta: var(--magenta);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
+}
+
+html {
+  background: var(--ink);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--ink);
+  color: #fff;
+}
+
+::selection {
+  background: rgba(139, 124, 255, 0.4);
+}
+
+/* Frosted glass panel used across the page */
+.glass {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  border: 1px solid var(--line);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 20px 60px -20px rgba(0, 0, 0, 0.6);
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, #fff 0%, #c9d8ff 40%, #b4a8ff 70%, #f0a6d4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4%, -3%, 0) scale(1.08); }
+}
+
+@keyframes drift-rev {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-5%, 4%, 0) scale(0.95); }
+}
+
+@keyframes grid-move {
+  from { background-position: 0 0; }
+  to { background-position: 0 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
