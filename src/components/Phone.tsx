@@ -13,14 +13,11 @@ export function Phone({
 }) {
   return (
     <div
-      className={`relative aspect-[9/19.2] w-[300px] rounded-[52px] bg-gradient-to-b from-[#3a3f55] via-[#1b1e2c] to-[#2b2f42] p-[10px] shadow-[0_60px_120px_-30px_rgba(30,20,90,0.9),0_0_0_1px_rgba(255,255,255,0.12)_inset] ${className}`}
+      className={`relative aspect-[9/19.2] w-[300px] rounded-[52px] bg-[linear-gradient(145deg,#9aa0b8_0%,#4b5068_18%,#2d3145_50%,#4b5068_82%,#9aa0b8_100%)] p-[3px] shadow-[0_60px_120px_-30px_rgba(30,20,90,0.9)] ${className}`}
     >
-      {/* side buttons */}
-      <span className="absolute -left-[3px] top-[120px] h-14 w-[3px] rounded-l bg-[#2b2f42]" />
-      <span className="absolute -left-[3px] top-[190px] h-14 w-[3px] rounded-l bg-[#2b2f42]" />
-      <span className="absolute -right-[3px] top-[160px] h-20 w-[3px] rounded-r bg-[#2b2f42]" />
-
-      <div className="relative h-full w-full overflow-hidden rounded-[43px] bg-[#070a1c]">
+      {/* black glass border around the display */}
+      <div className="h-full w-full rounded-[49px] bg-black p-[7px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
+      <div className="relative h-full w-full overflow-hidden rounded-[42px] bg-[#070a1c]">
         {/* screen glow */}
         <div className="absolute inset-0 bg-[radial-gradient(120%_60%_at_50%_0%,rgba(91,84,220,0.35),transparent_60%)]" />
 
@@ -47,6 +44,7 @@ export function Phone({
 
         {/* home indicator */}
         <div className="absolute bottom-2 left-1/2 z-20 h-[4px] w-[110px] -translate-x-1/2 rounded-full bg-white/70" />
+      </div>
       </div>
     </div>
   );
@@ -127,8 +125,83 @@ export function PhoneBack({ className = "" }: { className?: string }) {
 
 const DEPTH = 26;
 const LAYERS = 22;
+const HEIGHT = 640; // 300px wide at 9:19.2
 
-// A solid phone: front screen, metallic extruded edge and back plate, all in
+// Titanium rim colour for one layer of the extrusion, with the dark antenna
+// bands real iPhones have near each corner.
+function rimBackground(l: number) {
+  const base = `hsl(228 10% ${l}%)`;
+  const band = `hsl(228 12% ${Math.max(10, l - 22)}%)`;
+  return `linear-gradient(180deg, transparent 0 8.4%, ${band} 8.4% 9.1%, transparent 9.1% 90.9%, ${band} 90.9% 91.6%, transparent 91.6%),
+    linear-gradient(90deg, ${base} 0 20%, ${band} 20% 21.4%, ${base} 21.4% 78.6%, ${band} 78.6% 80%, ${base} 80%)`;
+}
+
+// A hardware button standing proud of the rim: an outer pill face plus the
+// two small caps that show its thickness from the front and back.
+function SideButton({ side, top, height, depth = 11 }: { side: "left" | "right"; top: number; height: number; depth?: number }) {
+  const out = 3; // how far it sticks out of the frame
+  const dir = side === "left" ? -1 : 1;
+  const metal = "linear-gradient(90deg, #4f546a, #c4c9dc 45%, #eef0f8 55%, #4f546a)";
+  return (
+    <div
+      aria-hidden
+      className="absolute"
+      style={{ top, height, left: side === "left" ? 0 : "100%", width: 0, transformStyle: "preserve-3d" }}
+    >
+      {/* outer face, perpendicular to the screen */}
+      <div
+        className="absolute top-0 rounded-[3px]"
+        style={{
+          width: depth,
+          height,
+          left: -depth / 2,
+          background: metal,
+          transform: `translateX(${dir * out}px) rotateY(${dir * 90}deg)`,
+        }}
+      />
+      {/* front and back caps */}
+      {[1, -1].map((f) => (
+        <div
+          key={f}
+          className="absolute top-0 rounded-[2px]"
+          style={{
+            width: out,
+            height,
+            left: side === "left" ? -out : 0,
+            background: "linear-gradient(180deg, #6b7088, #3a3e52 50%, #6b7088)",
+            transform: `translateZ(${(f * depth) / 2}px)${f < 0 ? " rotateY(180deg)" : ""}`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Bottom edge details: USB-C port flanked by speaker and mic grilles.
+function BottomEdge() {
+  const holes = (n: number) =>
+    Array.from({ length: n }, (_, i) => <span key={i} className="h-[4px] w-[4px] rounded-full bg-black/80" />);
+  return (
+    <div
+      aria-hidden
+      className="absolute left-1/2 flex items-center justify-center gap-[22px]"
+      style={{
+        top: HEIGHT,
+        width: 200,
+        height: DEPTH,
+        marginLeft: -100,
+        marginTop: -DEPTH / 2,
+        transform: "translateY(0.5px) rotateX(-90deg)",
+      }}
+    >
+      <span className="flex gap-[4px]">{holes(6)}</span>
+      <span className="h-[8px] w-[30px] rounded-full bg-[#07080d] shadow-[inset_0_0_0_1.5px_#2a2e3c]" />
+      <span className="flex gap-[4px]">{holes(6)}</span>
+    </div>
+  );
+}
+
+// A solid phone: front screen, titanium rim, buttons and back plate, all in
 // one 3D space. Rotate any ancestor with preserve-3d and it reads as an object.
 // `angle` (degrees of Y rotation) drives a moving specular glare on the glass.
 export function Phone3D({
@@ -140,24 +213,28 @@ export function Phone3D({
 }) {
   return (
     <div className="relative" style={{ transformStyle: "preserve-3d" }}>
-      {/* extruded edge */}
+      {/* extruded rim */}
       {Array.from({ length: LAYERS }, (_, i) => {
         const z = -DEPTH / 2 + ((i + 0.5) * DEPTH) / LAYERS;
-        // brighter toward the middle of the band, like a rounded metal rim
-        const t = 1 - Math.abs((i + 0.5) / LAYERS - 0.5) * 2;
-        const l = Math.round(28 + t * 46);
+        // flat titanium sides with softly rounded front and back edges
+        const t = Math.min(1, (1 - Math.abs((i + 0.5) / LAYERS - 0.5) * 2) * 3);
+        const l = Math.round(26 + t * 36);
         return (
           <div
             key={i}
             aria-hidden
             className="absolute inset-0 rounded-[52px]"
-            style={{
-              transform: `translateZ(${z}px)`,
-              background: `hsl(232 18% ${l}%)`,
-            }}
+            style={{ transform: `translateZ(${z}px)`, background: rimBackground(l) }}
           />
         );
       })}
+
+      {/* hardware buttons: Action, volume up/down on the left, side button on the right */}
+      <SideButton side="left" top={112} height={30} />
+      <SideButton side="left" top={166} height={58} />
+      <SideButton side="left" top={236} height={58} />
+      <SideButton side="right" top={186} height={94} />
+      <BottomEdge />
 
       {/* back plate */}
       <div
