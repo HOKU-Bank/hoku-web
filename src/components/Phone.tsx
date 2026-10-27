@@ -1,3 +1,6 @@
+"use client";
+
+import { motion, useTransform, type MotionValue } from "motion/react";
 import type { ReactNode } from "react";
 
 // A rendered phone frame; the screen content is passed in as children.
@@ -69,5 +72,73 @@ export function PhoneBack({ className = "" }: { className?: string }) {
         className="absolute left-1/2 top-1/2 h-10 w-auto -translate-x-1/2 -translate-y-1/2 opacity-90"
       />
     </div>
+  );
+}
+
+const DEPTH = 26;
+const LAYERS = 22;
+
+// A solid phone: front screen, metallic extruded edge and back plate, all in
+// one 3D space. Rotate any ancestor with preserve-3d and it reads as an object.
+// `angle` (degrees of Y rotation) drives a moving specular glare on the glass.
+export function Phone3D({
+  children,
+  angle,
+}: {
+  children: ReactNode;
+  angle?: MotionValue<number>;
+}) {
+  return (
+    <div className="relative" style={{ transformStyle: "preserve-3d" }}>
+      {/* extruded edge */}
+      {Array.from({ length: LAYERS }, (_, i) => {
+        const z = -DEPTH / 2 + ((i + 0.5) * DEPTH) / LAYERS;
+        // brighter toward the middle of the band, like a rounded metal rim
+        const t = 1 - Math.abs((i + 0.5) / LAYERS - 0.5) * 2;
+        const l = Math.round(28 + t * 46);
+        return (
+          <div
+            key={i}
+            aria-hidden
+            className="absolute inset-0 rounded-[52px]"
+            style={{
+              transform: `translateZ(${z}px)`,
+              background: `hsl(232 18% ${l}%)`,
+            }}
+          />
+        );
+      })}
+
+      {/* back plate */}
+      <div
+        className="absolute inset-0"
+        style={{ transform: `translateZ(${-DEPTH / 2}px) rotateY(180deg)`, backfaceVisibility: "hidden" }}
+      >
+        <PhoneBack />
+      </div>
+
+      {/* front */}
+      <div
+        className="relative"
+        style={{ transform: `translateZ(${DEPTH / 2}px)`, backfaceVisibility: "hidden" }}
+      >
+        <Phone>{children}</Phone>
+        {angle && <Glare angle={angle} />}
+      </div>
+    </div>
+  );
+}
+
+function Glare({ angle }: { angle: MotionValue<number> }) {
+  const background = useTransform(angle, (a) => {
+    const pos = 50 + Math.sin((a * Math.PI) / 180) * 120;
+    return `linear-gradient(115deg, transparent ${pos - 30}%, rgba(255,255,255,0.13) ${pos}%, transparent ${pos + 22}%)`;
+  });
+  return (
+    <motion.div
+      aria-hidden
+      className="pointer-events-none absolute inset-[10px] z-40 rounded-[43px] mix-blend-screen"
+      style={{ background }}
+    />
   );
 }

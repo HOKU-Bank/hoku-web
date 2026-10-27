@@ -9,7 +9,7 @@ import {
   useTransform,
 } from "motion/react";
 import { useRef, useState } from "react";
-import { Phone, PhoneBack } from "./Phone";
+import { Phone3D } from "./Phone";
 import { ChatCard, ChatScreen, type ChatMsg } from "./screens";
 
 type Scene = {
@@ -140,8 +140,8 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
   return (
     <div ref={ref} className="flex min-h-[85vh] flex-col justify-center">
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
         viewport={{ once: false, amount: 0.5 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
@@ -158,10 +158,19 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
       </motion.div>
 
       {/* mobile: each scene carries its own phone */}
-      <div className="mt-12 flex justify-center lg:hidden">
-        <Phone className="scale-[0.92]">
-          {inView || index === 0 ? <ChatScreen title={scene.chatTitle} messages={scene.messages} /> : null}
-        </Phone>
+      <div className="mt-12 flex justify-center [perspective:1400px] lg:hidden">
+        <motion.div
+          initial={{ rotateY: -50, rotateX: 12 }}
+          whileInView={{ rotateY: -12, rotateX: 5 }}
+          viewport={{ amount: 0.4 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{ transformStyle: "preserve-3d" }}
+          className="scale-[0.92]"
+        >
+          <Phone3D>
+            {inView || index === 0 ? <ChatScreen title={scene.chatTitle} messages={scene.messages} /> : null}
+          </Phone3D>
+        </motion.div>
       </div>
     </div>
   );
@@ -187,8 +196,11 @@ function SpinningPhone({ progress }: { progress: ReturnType<typeof useScroll>["s
   const turn = useTransform(rotateY, (a) => Math.abs(Math.sin((a * Math.PI) / 360)));
   const rotateX = useTransform(turn, [0, 1], [4, 14]);
   const scale = useTransform(turn, [0, 1], [1, 0.86]);
-  const rotateZ = useTransform(progress, [0, 1], [-4, 4]);
+  const rotateZ = useTransform(progress, [0, 1], [-3, 3]);
   const orbit = useTransform(rotateY, (a) => a / 4);
+  // rest a little turned so the phone's thickness stays visible
+  const displayY = useTransform(rotateY, (a) => a - 24);
+  const lift = useTransform(turn, [0, 1], [0, -30]);
 
   const [active, setActive] = useState(0);
   useMotionValueEvent(rotateY, "change", (a) => {
@@ -212,17 +224,18 @@ function SpinningPhone({ progress }: { progress: ReturnType<typeof useScroll>["s
 
       <div className="[perspective:1600px]">
         <motion.div
-          style={{ rotateY, rotateX, rotateZ, scale, transformStyle: "preserve-3d" }}
-          className="relative"
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          style={{ transformStyle: "preserve-3d" }}
         >
-          <div style={{ backfaceVisibility: "hidden" }}>
-            <Phone>
+          <motion.div
+            style={{ rotateY: displayY, rotateX, rotateZ, scale, y: lift, transformStyle: "preserve-3d" }}
+            className="relative"
+          >
+            <Phone3D angle={displayY}>
               <ChatScreen key={active} title={SCENES[active].chatTitle} messages={SCENES[active].messages} />
-            </Phone>
-          </div>
-          <div className="absolute inset-0" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-            <PhoneBack />
-          </div>
+            </Phone3D>
+          </motion.div>
         </motion.div>
       </div>
 

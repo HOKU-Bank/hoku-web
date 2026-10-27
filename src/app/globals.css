@@ -66,6 +66,20 @@ body {
   50% { transform: translate3d(-5%, 4%, 0) scale(0.95); }
 }
 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Spotlight that follows the pointer on cards (--mx/--my set from JS) */
+.spotlight {
+  background-image: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(180, 168, 255, 0.14),
+    transparent 60%
+  );
+}
+
 @keyframes grid-move {
   from { background-position: 0 0; }
   to { background-position: 0 64px; }

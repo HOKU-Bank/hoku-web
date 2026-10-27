@@ -9,8 +9,8 @@ const ease = [0.16, 1, 0.3, 1] as const;
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 32, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.9, delay, ease }}
       className={className}
@@ -101,8 +101,14 @@ export function Platform() {
               <motion.div
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                onPointerMove={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+                }}
                 className="glass group relative h-full overflow-hidden rounded-3xl p-8"
               >
+                <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <div className={`absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br ${p.accent} to-transparent opacity-60 blur-3xl transition-opacity duration-500 group-hover:opacity-100`} />
                 <p className="relative font-mono text-xs uppercase tracking-[0.18em] text-white/50">0{i + 1} — {p.tag}</p>
                 <h3 className="relative mt-6 text-2xl font-semibold tracking-tight">{p.title}</h3>

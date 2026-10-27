@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react";
 import { useRef } from "react";
 import { Aurora } from "./Aurora";
-import { Phone } from "./Phone";
+import { Phone3D } from "./Phone";
 import { HeroScreen } from "./screens";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -13,23 +13,26 @@ function Chip({
   className,
   delay,
   float,
+  z,
 }: {
   children: React.ReactNode;
   className: string;
   delay: number;
   float: number;
+  z: number;
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.85 }}
+      animate={{ opacity: 1, scale: 1 }}
       transition={{ delay, duration: 0.9, ease }}
       className={`absolute z-20 ${className}`}
+      style={{ translateZ: z }}
     >
       <motion.div
         animate={{ y: [0, -float, 0] }}
         transition={{ duration: 5 + float / 4, repeat: Infinity, ease: "easeInOut" }}
-        className="glass rounded-2xl px-4 py-3 text-left"
+        className="glass rounded-2xl px-4 py-3 text-left shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)]"
       >
         {children}
       </motion.div>
@@ -41,14 +44,17 @@ export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rx = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 120, damping: 20 });
-  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-12, 12]), { stiffness: 120, damping: 20 });
+  const rx = useSpring(useTransform(my, [-0.5, 0.5], [12, -12]), { stiffness: 90, damping: 18 });
+  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-22, 22]), { stiffness: 90, damping: 18 });
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const phoneY = useTransform(scrollYProgress, [0, 1], [0, 140]);
   const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const scrollRotY = useTransform(scrollYProgress, [0, 1], [0, -38]);
-  const scrollRotX = useTransform(scrollYProgress, [0, 1], [0, 22]);
+  const scrollRotY = useTransform(scrollYProgress, [0, 1], [0, -55]);
+  const scrollRotX = useTransform(scrollYProgress, [0, 1], [0, 28]);
+  // resting pose is turned slightly so the phone's depth is always visible
+  const stageRotY = useTransform([ry, scrollRotY], ([a, b]: number[]) => -24 + a + b);
+  const stageRotX = useTransform([rx, scrollRotX], ([a, b]: number[]) => 8 + a + b);
 
   return (
     <section
@@ -139,49 +145,58 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <motion.div style={{ y: phoneY }} className="relative mx-auto h-[640px] w-full max-w-[520px] [perspective:1400px]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          style={{ y: phoneY }}
+          className="relative mx-auto h-[660px] w-full max-w-[520px] [perspective:1600px]">
           <motion.div
-            initial={{ opacity: 0, y: 80, rotateX: 18 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 1.4, ease, delay: 0.15 }}
-            className="absolute left-1/2 top-0 -translate-x-1/2"
+            initial={{ y: 120, rotateY: -70, rotateX: 25 }}
+            animate={{ y: 0, rotateY: 0, rotateX: 0 }}
+            transition={{ duration: 1.8, ease, delay: 0.1 }}
+            className="absolute inset-0"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            <motion.div style={{ rotateX: scrollRotX, rotateY: scrollRotY, transformStyle: "preserve-3d" }}>
-            <motion.div style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}>
+            <motion.div
+              className="absolute inset-0"
+              style={{ rotateX: stageRotX, rotateY: stageRotY, transformStyle: "preserve-3d" }}
+            >
               <motion.div
-                animate={{ y: [0, -14, 0], rotateZ: [-1.5, 1, -1.5] }}
+                className="absolute left-1/2 top-2 -ml-[150px]"
+                animate={{ y: [0, -16, 0] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformStyle: "preserve-3d" }}
               >
-                <Phone>
+                <Phone3D angle={stageRotY}>
                   <HeroScreen />
-                </Phone>
+                </Phone3D>
               </motion.div>
-            </motion.div>
+
+              <Chip className="-left-20 top-24 hidden xl:block" z={110} delay={1.3} float={10}>
+                <p className="text-[10px] uppercase tracking-[0.14em] text-white/50">Runway Autopilot</p>
+                <p className="mt-1 text-sm font-medium">Venture debt offer ready</p>
+                <p className="text-xs text-white/50">before you had to ask</p>
+              </Chip>
+              <Chip className="-right-10 top-64 hidden sm:block" z={150} delay={1.6} float={14}>
+                <p className="text-2xl font-semibold tracking-tight">24h</p>
+                <p className="text-xs text-white/55">order → facility</p>
+              </Chip>
+              <Chip className="-left-10 bottom-36 hidden sm:block" z={80} delay={1.9} float={8}>
+                <p className="flex items-center gap-2 text-sm font-medium">
+                  <span className="grid h-5 w-5 place-items-center rounded-full bg-emerald-400/20 text-[10px] text-emerald-300">✓</span>
+                  Within your mandate
+                </p>
+              </Chip>
             </motion.div>
           </motion.div>
 
           {/* phone shadow on the "floor" */}
           <motion.div
-            animate={{ scale: [1, 0.88, 1], opacity: [0.55, 0.35, 0.55] }}
+            animate={{ scale: [1, 0.85, 1], opacity: [0.6, 0.35, 0.6] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-0 left-1/2 h-8 w-64 -translate-x-1/2 rounded-[100%] bg-black/70 blur-2xl"
+            className="absolute bottom-0 left-1/2 h-10 w-72 -translate-x-1/2 rounded-[100%] bg-black/80 blur-2xl"
           />
-
-          <Chip className="-left-24 top-20 hidden xl:block" delay={1.1} float={10}>
-            <p className="text-[10px] uppercase tracking-[0.14em] text-white/50">Runway Autopilot</p>
-            <p className="mt-1 text-sm font-medium">Venture debt offer ready</p>
-            <p className="text-xs text-white/50">before you had to ask</p>
-          </Chip>
-          <Chip className="-right-16 top-60 hidden sm:block" delay={1.4} float={14}>
-            <p className="text-2xl font-semibold tracking-tight">24h</p>
-            <p className="text-xs text-white/55">order → facility</p>
-          </Chip>
-          <Chip className="-left-16 bottom-32 hidden sm:block" delay={1.7} float={8}>
-            <p className="flex items-center gap-2 text-sm font-medium">
-              <span className="grid h-5 w-5 place-items-center rounded-full bg-emerald-400/20 text-[10px] text-emerald-300">✓</span>
-              Within your mandate
-            </p>
-          </Chip>
         </motion.div>
       </motion.div>
     </section>
