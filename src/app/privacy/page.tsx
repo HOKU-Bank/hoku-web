@@ -17,10 +17,25 @@ export default function Privacy() {
           Horaizon Group, Warsaw, Poland.
         </p>
         <p>
-          This website does not use tracking cookies. If you contact us by e-mail,
-          we process your name, e-mail address and the content of your message
-          solely to respond to your enquiry (Art. 6(1)(f) GDPR) and keep it for
-          no longer than necessary for that purpose.
+          This website does not use tracking cookies.
+        </p>
+        <p>
+          <strong className="text-white">Early access list.</strong> When you join
+          the early access list we process your name, e-mail address, whether you
+          run a business and, optionally, your company name. We use this data only
+          to contact you about early access to Horaizon, on the basis of your
+          consent (Art. 6(1)(a) GDPR). You can withdraw consent at any time by
+          writing to us, and we will delete your data. Otherwise we keep it until
+          early access opens and no longer than 24 months.
+        </p>
+        <p>
+          The data is stored with our processor Supabase in the European Union
+          (Frankfurt). The website is hosted by Vercel.
+        </p>
+        <p>
+          If you contact us by e-mail, we process your name, e-mail address and
+          the content of your message solely to respond to your enquiry (Art.
+          6(1)(f) GDPR).
         </p>
         <p>
           You have the right to access, rectify and erase your data, to restrict

@@ -3,6 +3,7 @@
 import { animate, motion, useInView, useMotionValue, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
 import { Aurora } from "./Aurora";
+import { WaitlistForm } from "./WaitlistForm";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -210,13 +211,7 @@ export function Access() {
         <p className="mx-auto mt-6 max-w-lg text-lg text-white/60">
           We&apos;re building it now. Be among the first companies on Horaizon.
         </p>
-        <a
-          href={`mailto:${CONTACT}?subject=Horaizon%20early%20access`}
-          className="group mt-10 inline-flex h-12 items-center gap-2 rounded-full bg-white px-7 text-sm font-semibold text-[#0a1030] transition hover:bg-white/90"
-        >
-          Get early access
-          <span className="transition group-hover:translate-x-0.5">→</span>
-        </a>
+        <WaitlistForm />
       </Reveal>
     </section>
   );
