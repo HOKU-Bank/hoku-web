@@ -20,8 +20,8 @@ const FEED: FeedItem[] = [
 
 const toneClass: Record<FeedItem["tone"], string> = {
   sky: "bg-sky/20 text-sky",
-  violet: "bg-violet/25 text-[#c4bcff]",
-  magenta: "bg-magenta/25 text-[#ffb3dc]",
+  violet: "bg-violet/25 text-[#e4e6ec]",
+  magenta: "bg-magenta/30 text-[#e4e6ec]",
   green: "bg-emerald-400/20 text-emerald-300",
 };
 
@@ -73,14 +73,14 @@ export function HeroScreen() {
           <svg viewBox="0 0 240 48" className="h-full w-full" preserveAspectRatio="none">
             <defs>
               <linearGradient id="spark" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor="#8b7cff" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#8b7cff" stopOpacity="0" />
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
               </linearGradient>
             </defs>
             <motion.path
               d="M0 40 C 30 36, 40 30, 60 32 S 100 20, 120 24 S 160 10, 180 14 S 220 6, 240 4"
               fill="none"
-              stroke="#a99fff"
+              stroke="#d7dae3"
               strokeWidth="2"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
@@ -131,7 +131,7 @@ export function HeroScreen() {
             </motion.div>
           ))}
         </AnimatePresence>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#070a1c] to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#050507] to-transparent" />
       </div>
     </div>
   );
@@ -167,7 +167,7 @@ export function ChatScreen({ title, messages }: { title: string; messages: ChatM
   useEffect(() => {
     if (shown >= messages.length) return;
     const next = messages[shown];
-    const id = setTimeout(() => setShown((s) => s + 1), shown === 0 ? 350 : next.from === "user" ? 700 : 1100);
+    const id = setTimeout(() => setShown((s) => s + 1), shown === 0 ? 600 : next.from === "user" ? 1500 : 2100);
     return () => clearTimeout(id);
   }, [shown, messages]);
 
@@ -176,7 +176,7 @@ export function ChatScreen({ title, messages }: { title: string; messages: ChatM
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 border-b border-white/[0.06] px-4 pb-3 pt-6">
-        <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-violet to-magenta">
+        <span className="grid h-8 w-8 place-items-center rounded-full bg-white/12 ring-1 ring-white/25">
           <img src="/horaizon-mark.png" alt="" className="h-3 w-auto" />
         </span>
         <div>
@@ -196,7 +196,7 @@ export function ChatScreen({ title, messages }: { title: string; messages: ChatM
               className={m.from === "user" ? "self-end" : "self-start"}
             >
               {m.from === "user" && (
-                <p className="max-w-[210px] rounded-2xl rounded-br-md bg-gradient-to-br from-[#6a5cff] to-[#8b5cf6] px-3 py-2 text-[11.5px] leading-snug">
+                <p className="max-w-[210px] rounded-2xl rounded-br-md bg-white text-[#0b0b0f] px-3 py-2 text-[11.5px] leading-snug">
                   {m.text}
                 </p>
               )}
@@ -236,16 +236,23 @@ export function ChatCard({
   cta?: string;
   done?: string;
 }) {
+  const [tapped, setTapped] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+  // Give people time to read the card, then "tap" the button (a ripple, no
+  // finger) and let the agent confirm.
   useEffect(() => {
     if (!done) return;
-    const id = setTimeout(() => setConfirmed(true), 1500);
-    return () => clearTimeout(id);
-  }, [done]);
+    const tap = setTimeout(() => setTapped(true), cta ? 2400 : 2000);
+    const ok = setTimeout(() => setConfirmed(true), cta ? 3300 : 2400);
+    return () => {
+      clearTimeout(tap);
+      clearTimeout(ok);
+    };
+  }, [done, cta]);
 
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-3">
-      <p className="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#b4a8ff]">{label}</p>
+      <p className="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#e4e6ec]">{label}</p>
       <div className="mt-2 space-y-1.5">
         {rows.map(([k, val]) => (
           <div key={k} className="flex justify-between text-[11px]">
@@ -255,13 +262,35 @@ export function ChatCard({
         ))}
       </div>
       {(cta || done) && (
-        <div
-          className={`mt-2.5 rounded-xl py-1.5 text-center text-[11px] font-semibold transition-colors duration-500 ${
-            confirmed ? "bg-emerald-400/20 text-emerald-300" : cta ? "bg-white text-[#0a1030]" : "bg-white/10 text-white/60"
+        <motion.div
+          animate={tapped && cta && !confirmed ? { scale: [1, 0.95, 1] } : { scale: 1 }}
+          transition={{ duration: 0.35 }}
+          className={`relative mt-2.5 rounded-xl py-1.5 text-center text-[11px] font-semibold transition-colors duration-500 ${
+            confirmed ? "bg-emerald-400/20 text-emerald-300" : cta ? "bg-white text-[#0b0b0f]" : "bg-white/10 text-white/60"
           }`}
         >
-          {confirmed ? done : cta ?? "Working…"}
-        </div>
+          {/* tap ripple: rings spreading like a stone dropped in water */}
+          {tapped && cta && (
+            <span aria-hidden className="pointer-events-none absolute left-1/2 top-1/2">
+              {[0, 0.18, 0.36].map((d) => (
+                <motion.span
+                  key={d}
+                  initial={{ scale: 0, opacity: 0.7 }}
+                  animate={{ scale: 8, opacity: 0 }}
+                  transition={{ duration: 1.4, delay: d, ease: "easeOut" }}
+                  className="absolute -left-3 -top-3 h-6 w-6 rounded-full border-2 border-white/80"
+                />
+              ))}
+              <motion.span
+                initial={{ scale: 0, opacity: 0.5 }}
+                animate={{ scale: 2.2, opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="absolute -left-3 -top-3 h-6 w-6 rounded-full bg-white/70"
+              />
+            </span>
+          )}
+          <span className="relative">{confirmed ? done : cta ?? "Working…"}</span>
+        </motion.div>
       )}
     </div>
   );

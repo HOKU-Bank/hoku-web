@@ -59,83 +59,107 @@ export function Stats() {
 
 /* ------------------------------------------------------------------ */
 
+const ICONS: Record<string, React.ReactNode> = {
+  Banking: (
+    <path d="M3 10.5 12 5l9 5.5M5 10.5V18m4.67-7.5V18m4.66-7.5V18M19 10.5V18M3.5 19.5h17" />
+  ),
+  Credit: <path d="M4 17.5 9.5 12l3.5 3.5L20 8.5M14.5 8.5H20V14" />,
+  Autopilot: (
+    <path d="M12 3.5v3m0 11v3m8.5-8.5h-3m-11 0h-3m14.01-6.01-2.12 2.12M7.61 16.39l-2.12 2.12m13.02 0-2.12-2.12M7.61 7.61 5.49 5.49M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+  ),
+};
+
 const PILLARS = [
   {
     tag: "Banking",
     title: "Accounts, payments & treasuries",
     points: ["Business accounts & IBANs", "SEPA Instant & multi-currency", "Cards with spend controls", "Yield on idle cash"],
-    accent: "from-sky/40",
+    chip: "Free account · live the same day",
   },
   {
     tag: "Credit",
     title: "Capital underwritten on live data",
     points: ["SME growth loans", "Venture debt", "Guarantees & FX hedging", "Decisions from your ledger, not property"],
-    accent: "from-violet/50",
+    chip: "Credit from our own balance sheet",
   },
   {
     tag: "Autopilot",
     title: "Agents that act within your mandate",
     points: ["Payables & receivables", "Contract-to-Cash & Runway", "Tender Agent & Grant Bridge", "Loan Conditions Guard"],
-    accent: "from-magenta/45",
+    chip: "8 agents · working 24/7",
   },
 ];
 
 export function Platform() {
   return (
-    <section id="platform" className="relative px-6 py-32">
-      <div className="mx-auto max-w-6xl">
-        <Reveal className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/45">One account</p>
-          <h2 className="mt-5 text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
-            Banking and credit,{" "}
-            <span className="font-serif font-normal italic text-gradient">finally in one place.</span>
+    <section id="platform" className="relative overflow-hidden px-6 py-36">
+      {/* light behind the glass */}
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-[55%] h-[520px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/[0.07] blur-[120px]" />
+
+      <div className="relative mx-auto max-w-6xl">
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/50">One account</p>
+          <h2 className="mt-5 text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[1] tracking-[-0.045em]">
+            Banking and credit,
+            <br />
+            <span className="text-gradient">finally in one place.</span>
           </h2>
-          <p className="mt-6 text-lg text-white/60">
+          <p className="mx-auto mt-6 max-w-xl text-lg text-white/65">
             Built for the technology SMEs and venture-backed startups that are too
             big for a neobank and too asset-light for a traditional bank.
           </p>
         </Reveal>
 
-        <div className="mt-16 grid gap-5 md:grid-cols-3">
+        <div className="mt-20 grid gap-6 md:grid-cols-3">
           {PILLARS.map((p, i) => (
             <Reveal key={p.tag} delay={i * 0.1}>
               <motion.div
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 300, damping: 24 }}
                 onPointerMove={(e) => {
                   const r = e.currentTarget.getBoundingClientRect();
                   e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
                   e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
                 }}
-                className="glass group relative h-full overflow-hidden rounded-3xl p-8"
+                className="liquid-glass group flex h-full flex-col overflow-hidden rounded-[32px] p-8 sm:p-9"
               >
                 <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <div className={`absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gradient-to-br ${p.accent} to-transparent opacity-60 blur-3xl transition-opacity duration-500 group-hover:opacity-100`} />
-                <p className="relative font-mono text-xs uppercase tracking-[0.18em] text-white/50">0{i + 1} / {p.tag}</p>
-                <h3 className="relative mt-6 text-2xl font-semibold tracking-tight">{p.title}</h3>
-                <ul className="relative mt-8 space-y-3">
+                <div className="relative flex items-center justify-between">
+                  <span className="grid h-14 w-14 place-items-center rounded-2xl border border-white/15 bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]">
+                    <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      {ICONS[p.tag]}
+                    </svg>
+                  </span>
+                  <span className="font-mono text-xs text-white/40">0{i + 1}</span>
+                </div>
+                <p className="relative mt-8 text-sm font-medium uppercase tracking-[0.18em] text-white/55">{p.tag}</p>
+                <h3 className="relative mt-3 text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.025em]">{p.title}</h3>
+                <ul className="relative mt-8 space-y-3.5">
                   {p.points.map((pt) => (
-                    <li key={pt} className="flex items-center gap-3 text-[15px] text-white/70">
-                      <span className="h-1 w-1 rounded-full bg-white/60" />
+                    <li key={pt} className="flex items-center gap-3 text-[15px] text-white/80">
+                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white/10 text-[10px]">✓</span>
                       {pt}
                     </li>
                   ))}
                 </ul>
+                <p className="relative mt-auto pt-10 text-sm text-white/55">
+                  <span className="inline-block rounded-full border border-white/12 bg-black/25 px-3.5 py-1.5">{p.chip}</span>
+                </p>
               </motion.div>
             </Reveal>
           ))}
         </div>
 
         <Reveal delay={0.2}>
-          <div className="mt-5 grid gap-5 rounded-3xl border border-white/10 p-8 sm:grid-cols-3">
+          <div className="liquid-glass mt-6 grid gap-6 rounded-[28px] p-8 sm:grid-cols-3">
             {[
               ["People own control", "Limits are enforced outside the AI model."],
               ["Every action logged", "Any agent can be paused at any moment."],
               ["Shadow mode first", "Agents prove themselves before they act."],
             ].map(([t, d]) => (
-              <div key={t}>
-                <p className="font-medium">{t}</p>
-                <p className="mt-1 text-sm text-white/50">{d}</p>
+              <div key={t} className="relative">
+                <p className="text-lg font-medium">{t}</p>
+                <p className="mt-1 text-sm text-white/55">{d}</p>
               </div>
             ))}
           </div>
@@ -162,7 +186,7 @@ export function Team() {
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/45">Team</p>
           <h2 className="mx-auto mt-5 max-w-3xl text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
             100+ years of banking,{" "}
-            <span className="font-serif font-normal italic text-gradient">led by founders who scaled credit tech.</span>
+            <span className="text-gradient">led by founders who scaled credit tech.</span>
           </h2>
         </Reveal>
 
@@ -174,9 +198,9 @@ export function Team() {
                   <img
                     src={m.photo}
                     alt={m.name}
-                    className="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a1030]/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0f]/80 via-transparent to-transparent" />
                   <span className="absolute bottom-3 left-3 rounded-full bg-white/15 px-2.5 py-1 text-xs font-medium backdrop-blur">
                     {m.role}
                   </span>
@@ -206,7 +230,7 @@ export function Access() {
         <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.045em]">
           The bank Europe&apos;s
           <br />
-          <span className="font-serif font-normal italic text-gradient">innovators deserve.</span>
+          <span className="text-gradient">innovators deserve.</span>
         </h2>
         <p className="mx-auto mt-6 max-w-lg text-lg text-white/60">
           We&apos;re building it now. Be among the first companies on Horaizon.

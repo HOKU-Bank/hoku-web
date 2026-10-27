@@ -18,7 +18,7 @@ export function AgentMarquee() {
         {row.map((a, i) => (
           <span key={i} className="flex items-center gap-12 whitespace-nowrap text-lg font-medium tracking-tight text-white/45">
             {a}
-            <span className="h-1.5 w-1.5 rotate-45 bg-gradient-to-br from-sky to-magenta" />
+            <span className="h-1.5 w-1.5 rotate-45 bg-white/60" />
           </span>
         ))}
       </div>

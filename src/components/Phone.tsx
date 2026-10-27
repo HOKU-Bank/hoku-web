@@ -13,13 +13,13 @@ export function Phone({
 }) {
   return (
     <div
-      className={`relative aspect-[9/19.2] w-[300px] rounded-[52px] bg-[linear-gradient(145deg,#9aa0b8_0%,#4b5068_18%,#2d3145_50%,#4b5068_82%,#9aa0b8_100%)] p-[3px] shadow-[0_60px_120px_-30px_rgba(30,20,90,0.9)] ${className}`}
+      className={`relative aspect-[9/19.2] w-[300px] rounded-[52px] bg-[linear-gradient(145deg,#a3a3aa_0%,#4c4c54_18%,#2c2c31_50%,#4c4c54_82%,#a3a3aa_100%)] p-[3px] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.9)] ${className}`}
     >
       {/* black glass border around the display */}
       <div className="h-full w-full rounded-[49px] bg-black p-[7px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]">
-      <div className="relative h-full w-full overflow-hidden rounded-[42px] bg-[#070a1c]">
+      <div className="relative h-full w-full overflow-hidden rounded-[42px] bg-[#050507]">
         {/* screen glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(120%_60%_at_50%_0%,rgba(91,84,220,0.35),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(120%_60%_at_50%_0%,rgba(255,255,255,0.10),transparent_60%)]" />
 
         {/* status bar */}
         <div className="relative z-20 flex items-center justify-between px-7 pt-3.5 text-[11px] font-semibold text-white">
@@ -77,7 +77,7 @@ function Lens({ x, y }: { x: number; y: number }) {
 export function PhoneBack({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`relative aspect-[9/19.2] w-[300px] overflow-hidden rounded-[52px] bg-[linear-gradient(160deg,#3b4560_0%,#252c42_45%,#1c2135_100%)] shadow-[0_60px_120px_-30px_rgba(30,20,90,0.9),inset_0_0_0_1px_rgba(255,255,255,0.12),inset_0_0_0_7px_#2a3046] ${className}`}
+      className={`relative aspect-[9/19.2] w-[300px] overflow-hidden rounded-[52px] bg-[linear-gradient(160deg,#3a3a3f_0%,#232327_45%,#17171a_100%)] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.9),inset_0_0_0_1px_rgba(255,255,255,0.12),inset_0_0_0_7px_#2b2b30] ${className}`}
     >
       {/* matte glass sheen */}
       <div className="absolute inset-0 bg-[radial-gradient(90%_55%_at_20%_10%,rgba(190,205,255,0.16),transparent_60%),radial-gradient(80%_50%_at_90%_95%,rgba(150,110,220,0.18),transparent_60%)]" />
@@ -124,14 +124,14 @@ export function PhoneBack({ className = "" }: { className?: string }) {
 }
 
 const DEPTH = 26;
-const LAYERS = 22;
+const LAYERS = 34;
 const HEIGHT = 640; // 300px wide at 9:19.2
 
 // Titanium rim colour for one layer of the extrusion, with the dark antenna
 // bands real iPhones have near each corner.
 function rimBackground(l: number) {
-  const base = `hsl(228 10% ${l}%)`;
-  const band = `hsl(228 12% ${Math.max(10, l - 22)}%)`;
+  const base = `hsl(240 3% ${l}%)`;
+  const band = `hsl(240 4% ${Math.max(10, l - 22)}%)`;
   return `linear-gradient(180deg, transparent 0 8.4%, ${band} 8.4% 9.1%, transparent 9.1% 90.9%, ${band} 90.9% 91.6%, transparent 91.6%),
     linear-gradient(90deg, ${base} 0 20%, ${band} 20% 21.4%, ${base} 21.4% 78.6%, ${band} 78.6% 80%, ${base} 80%)`;
 }
@@ -141,7 +141,7 @@ function rimBackground(l: number) {
 function SideButton({ side, top, height, depth = 11 }: { side: "left" | "right"; top: number; height: number; depth?: number }) {
   const out = 3; // how far it sticks out of the frame
   const dir = side === "left" ? -1 : 1;
-  const metal = "linear-gradient(90deg, #4f546a, #c4c9dc 45%, #eef0f8 55%, #4f546a)";
+  const metal = "linear-gradient(90deg, #55555d, #cfcfd6 45%, #f4f4f7 55%, #55555d)";
   return (
     <div
       aria-hidden
@@ -168,7 +168,7 @@ function SideButton({ side, top, height, depth = 11 }: { side: "left" | "right";
             width: out,
             height,
             left: side === "left" ? -out : 0,
-            background: "linear-gradient(180deg, #6b7088, #3a3e52 50%, #6b7088)",
+            background: "linear-gradient(180deg, #707078, #3a3a40 50%, #707078)",
             transform: `translateZ(${(f * depth) / 2}px)${f < 0 ? " rotateY(180deg)" : ""}`,
           }}
         />
@@ -216,9 +216,9 @@ export function Phone3D({
       {/* extruded rim */}
       {Array.from({ length: LAYERS }, (_, i) => {
         const z = -DEPTH / 2 + ((i + 0.5) * DEPTH) / LAYERS;
-        // flat titanium sides with softly rounded front and back edges
-        const t = Math.min(1, (1 - Math.abs((i + 0.5) / LAYERS - 0.5) * 2) * 3);
-        const l = Math.round(26 + t * 36);
+        // rounded titanium profile: bright along the middle, rolling off to the glass
+        const t = Math.sqrt(Math.sin(Math.PI * ((i + 0.5) / LAYERS)));
+        const l = Math.round(22 + t * 42);
         return (
           <div
             key={i}

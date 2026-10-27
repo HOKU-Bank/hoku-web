@@ -139,23 +139,33 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
 
   return (
     <div ref={ref} className="flex min-h-[85vh] flex-col justify-center">
-      <motion.div
-        initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
-        viewport={{ once: false, amount: 0.5 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <p className="text-sm font-medium text-[#b4a8ff]">
-          <span className="mr-3 font-mono text-white/35">0{index + 1}</span>
-          {scene.eyebrow}
-        </p>
-        <h3 className="mt-4 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{scene.title}</h3>
-        <p className="mt-5 max-w-md text-lg leading-relaxed text-white/60">{scene.body}</p>
-        <div className="mt-8 flex items-baseline gap-3 border-t border-white/10 pt-6">
-          <span className="text-3xl font-semibold tracking-tight text-gradient">{scene.stat[0]}</span>
-          <span className="text-sm text-white/50">{scene.stat[1]}</span>
-        </div>
-      </motion.div>
+      <div className="relative">
+        {/* light behind the glass so the frosting has something to bend */}
+        <div aria-hidden className="pointer-events-none absolute -left-10 top-6 h-40 w-40 rounded-full bg-white/[0.14] blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-6 right-6 h-32 w-56 rounded-full bg-white/[0.08] blur-3xl" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+          viewport={{ once: false, amount: 0.5 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="liquid-glass rounded-[32px] p-8 sm:p-10"
+        >
+          <div className="flex items-center justify-between">
+            <span className="rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-xs font-medium tracking-wide text-white/80">
+              {scene.eyebrow}
+            </span>
+            <span className="font-mono text-xs text-white/35">0{index + 1} / 0{SCENES.length}</span>
+          </div>
+          <h3 className="mt-6 text-4xl font-semibold tracking-[-0.035em] sm:text-[2.75rem] sm:leading-[1.05]">{scene.title}</h3>
+          <p className="mt-4 max-w-md text-[17px] leading-relaxed text-white/60">{scene.body}</p>
+          <div className="mt-8 flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 px-5 py-4">
+            <span className="text-3xl font-semibold tracking-tight text-gradient">{scene.stat[0]}</span>
+            <span className="h-8 w-px bg-white/10" />
+            <span className="text-sm leading-snug text-white/55">{scene.stat[1]}</span>
+          </div>
+        </motion.div>
+      </div>
 
       {/* mobile: each scene carries its own phone */}
       <div className="mt-12 flex justify-center [perspective:1400px] lg:hidden">
@@ -176,7 +186,7 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
   );
 }
 
-const GLOWS = ["#3b4cc0", "#2a6fb0", "#7a4fd6", "#b04a90"];
+const GLOWS = ["#3b3d46", "#2c2e35", "#45474f", "#34363d"];
 
 // Desktop: a sticky phone that turns a full revolution between scenes.
 // The screen swaps while its back is facing the viewer.
@@ -263,7 +273,7 @@ export function AgentStory() {
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/45">Horaizon Autopilot</p>
           <h2 className="mt-5 text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
             Your finance back office,{" "}
-            <span className="font-serif font-normal italic text-gradient">on autopilot.</span>
+            <span className="text-gradient">on autopilot.</span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg text-white/60">
             Tell it what you want in plain language. Agents act 24/7 within the

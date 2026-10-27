@@ -33,7 +33,7 @@ const SECTORS = [
 ];
 
 const inputClass =
-  "h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-[15px] text-white placeholder:text-white/35 outline-none transition focus:border-[#b4a8ff]/60 focus:bg-white/[0.07] focus:ring-4 focus:ring-[#8b7cff]/15";
+  "h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-[15px] text-white placeholder:text-white/35 outline-none transition focus:border-[#e4e6ec]/60 focus:bg-white/[0.07] focus:ring-4 focus:ring-[#ffffff]/15";
 
 export function WaitlistForm() {
   const [hasBusiness, setHasBusiness] = useState<boolean | null>(null);
@@ -140,7 +140,7 @@ export function WaitlistForm() {
                     onClick={() => setHasBusiness(val as boolean)}
                     aria-pressed={hasBusiness === val}
                     className={`relative h-10 rounded-lg text-sm font-medium transition ${
-                      hasBusiness === val ? "text-[#0a1030]" : "text-white/70 hover:text-white"
+                      hasBusiness === val ? "text-[#0b0b0f]" : "text-white/70 hover:text-white"
                     }`}
                   >
                     {hasBusiness === val && (
@@ -175,7 +175,7 @@ export function WaitlistForm() {
                           aria-pressed={businessType === val}
                           className={`h-10 rounded-lg border text-sm font-medium transition ${
                             businessType === val
-                              ? "border-[#b4a8ff]/70 bg-[#8b7cff]/20 text-white"
+                              ? "border-[#e4e6ec]/70 bg-[#ffffff]/20 text-white"
                               : "border-white/10 bg-white/[0.03] text-white/65 hover:border-white/25 hover:text-white"
                           }`}
                         >
@@ -196,7 +196,7 @@ export function WaitlistForm() {
                         <select name="sector" required defaultValue="" className={`${inputClass} appearance-none pr-10 invalid:text-white/35`}>
                           <option value="" disabled>Choose a sector</option>
                           {SECTORS.map((sec) => (
-                            <option key={sec} value={sec} className="bg-[#0a1030] text-white">{sec}</option>
+                            <option key={sec} value={sec} className="bg-[#0b0b0f] text-white">{sec}</option>
                           ))}
                         </select>
                         <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-white/45">▾</span>
@@ -208,7 +208,7 @@ export function WaitlistForm() {
             </AnimatePresence>
 
             <label className="flex items-start gap-3 pt-1 text-[13px] leading-relaxed text-white/50">
-              <input name="consent" type="checkbox" required className="mt-0.5 h-4 w-4 shrink-0 accent-[#8b7cff]" />
+              <input name="consent" type="checkbox" required className="mt-0.5 h-4 w-4 shrink-0 accent-[#ffffff]" />
               <span>
                 I agree that Horaizon may store my details to contact me about early access. See our{" "}
                 <Link href="/privacy" className="text-white/75 underline underline-offset-2 hover:text-white">
@@ -218,12 +218,12 @@ export function WaitlistForm() {
               </span>
             </label>
 
-            {error && <p className="text-sm text-[#ffb3dc]">{error}</p>}
+            {error && <p className="text-sm text-[#ff9d9d]">{error}</p>}
 
             <button
               type="submit"
               disabled={status === "sending"}
-              className="group mt-2 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-[#0a1030] transition hover:bg-white/90 disabled:opacity-60"
+              className="group mt-2 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-[#0b0b0f] transition hover:bg-white/90 disabled:opacity-60"
             >
               {status === "sending" ? "Joining…" : "Get early access"}
               <span className="transition group-hover:translate-x-0.5">→</span>

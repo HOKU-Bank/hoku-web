@@ -30,7 +30,7 @@ export function Nav() {
         </div>
         <a
           href="#access"
-          className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#0a1030] transition hover:bg-white/90"
+          className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#0b0b0f] transition hover:bg-white/90"
         >
           Early access
         </a>

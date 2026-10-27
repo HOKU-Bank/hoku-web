@@ -73,7 +73,7 @@ export function Hero() {
           className="absolute inset-x-[-50%] bottom-[-20%] h-[160%] origin-bottom [transform:rotateX(62deg)]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(160,150,255,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(160,150,255,0.22) 1px, transparent 1px)",
+              "linear-gradient(rgba(255,255,255,0.10) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.10) 1px, transparent 1px)",
             backgroundSize: "64px 64px",
             maskImage: "linear-gradient(to top, black 10%, transparent 80%)",
             WebkitMaskImage: "linear-gradient(to top, black 10%, transparent 80%)",
@@ -82,7 +82,7 @@ export function Hero() {
         />
       </div>
       {/* horizon line */}
-      <div className="absolute inset-x-0 bottom-[-55vw] -z-10 mx-auto h-[80vw] w-[140vw] -translate-x-[14vw] rounded-[100%] border-t border-white/20 bg-[radial-gradient(ellipse_at_top,rgba(139,124,255,0.25),transparent_60%)]" />
+      <div className="absolute inset-x-0 bottom-[-55vw] -z-10 mx-auto h-[80vw] w-[140vw] -translate-x-[14vw] rounded-[100%] border-t border-white/20 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.10),transparent_60%)]" />
 
       <motion.div
         style={{ opacity: fade }}
@@ -107,7 +107,7 @@ export function Hero() {
           >
             Banking that
             <br />
-            <span className="font-serif text-[1.08em] font-normal italic tracking-[-0.02em] text-gradient">
+            <span className="text-gradient">
               runs itself.
             </span>
           </motion.h1>
@@ -131,7 +131,7 @@ export function Hero() {
           >
             <a
               href="#access"
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#0a1030] transition hover:bg-white/90"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#0b0b0f] transition hover:bg-white/90"
             >
               Get early access
               <span className="transition group-hover:translate-x-0.5">→</span>
