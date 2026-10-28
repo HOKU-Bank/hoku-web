@@ -1,10 +1,13 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react";
-import { useRef } from "react";
+import { animate, motion, useMotionValue, useSpring, useTransform, useScroll, type MotionValue } from "motion/react";
+import dynamic from "next/dynamic";
+import { useEffect, useRef } from "react";
 import { Aurora } from "./Aurora";
-import { Phone3D } from "./Phone";
+import { Screen } from "./Phone";
 import { HeroScreen } from "./screens";
+
+const PhoneModel = dynamic(() => import("./PhoneModel").then((m) => m.PhoneModel), { ssr: false });
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -13,21 +16,28 @@ function Chip({
   className,
   delay,
   float,
-  z,
+  depth,
+  mx,
+  my,
 }: {
   children: React.ReactNode;
   className: string;
   delay: number;
   float: number;
-  z: number;
+  /** parallax strength in px; chips "nearer" the viewer move more */
+  depth: number;
+  mx: MotionValue<number>;
+  my: MotionValue<number>;
 }) {
+  const x = useTransform(mx, [-0.5, 0.5], [-depth, depth]);
+  const y = useTransform(my, [-0.5, 0.5], [-depth * 0.6, depth * 0.6]);
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay, duration: 0.9, ease }}
-      className={`absolute z-20 ${className}`}
-      style={{ translateZ: z }}
+      className={`absolute z-30 ${className}`}
+      style={{ x, y }}
     >
       <motion.div
         animate={{ y: [0, -float, 0] }}
@@ -53,8 +63,15 @@ export function Hero() {
   const scrollRotY = useTransform(scrollYProgress, [0, 1], [0, -55]);
   const scrollRotX = useTransform(scrollYProgress, [0, 1], [0, 28]);
   // resting pose is turned slightly so the phone's depth is always visible
-  const stageRotY = useTransform([ry, scrollRotY], ([a, b]: number[]) => -24 + a + b);
-  const stageRotX = useTransform([rx, scrollRotX], ([a, b]: number[]) => 8 + a + b);
+  // entrance: the phone swings in from the side
+  const intro = useMotionValue(-80);
+  useEffect(() => {
+    const c = animate(intro, 0, { duration: 1.8, ease, delay: 0.2 });
+    return () => c.stop();
+  }, [intro]);
+  const stageRotY = useTransform([ry, scrollRotY, intro], ([a, b, c]: number[]) => -22 + a + b + c);
+  const stageRotX = useTransform([rx, scrollRotX, intro], ([a, b, c]: number[]) => 6 + a + b - c * 0.25);
+  const lift = useTransform(intro, [-80, 0], [-1.2, 0]);
 
   return (
     <section
@@ -150,46 +167,33 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           style={{ y: phoneY }}
-          className="relative mx-auto h-[660px] w-full max-w-[520px] [perspective:1600px]">
-          <motion.div
-            initial={{ y: 120, rotateY: -70, rotateX: 25 }}
-            animate={{ y: 0, rotateY: 0, rotateX: 0 }}
-            transition={{ duration: 1.8, ease, delay: 0.1 }}
-            className="absolute inset-0"
-            style={{ transformStyle: "preserve-3d" }}
-          >
-            <motion.div
-              className="absolute inset-0"
-              style={{ rotateX: stageRotX, rotateY: stageRotY, transformStyle: "preserve-3d" }}
-            >
-              <motion.div
-                className="absolute left-1/2 top-2 -ml-[150px]"
-                animate={{ y: [0, -16, 0] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                <Phone3D angle={stageRotY}>
-                  <HeroScreen />
-                </Phone3D>
-              </motion.div>
+          className="relative mx-auto h-[660px] w-full max-w-[520px]">
+          <PhoneModel
+            className="absolute inset-x-[-15%] inset-y-0"
+            cameraZ={8.6}
+            motion={{ rotateX: stageRotX, rotateY: stageRotY, lift }}
+            screen={
+              <Screen>
+                <HeroScreen />
+              </Screen>
+            }
+          />
 
-              <Chip className="-left-20 top-24 hidden xl:block" z={110} delay={1.3} float={10}>
-                <p className="text-[10px] uppercase tracking-[0.14em] text-white/50">Runway Autopilot</p>
-                <p className="mt-1 text-sm font-medium">Venture debt offer ready</p>
-                <p className="text-xs text-white/50">before you had to ask</p>
-              </Chip>
-              <Chip className="-right-10 top-64 hidden sm:block" z={150} delay={1.6} float={14}>
-                <p className="text-2xl font-semibold tracking-tight">24h</p>
-                <p className="text-xs text-white/55">order → facility</p>
-              </Chip>
-              <Chip className="-left-10 bottom-36 hidden sm:block" z={80} delay={1.9} float={8}>
-                <p className="flex items-center gap-2 text-sm font-medium">
-                  <span className="grid h-5 w-5 place-items-center rounded-full bg-emerald-400/20 text-[10px] text-emerald-300">✓</span>
-                  Within your mandate
-                </p>
-              </Chip>
-            </motion.div>
-          </motion.div>
+          <Chip className="-left-40 top-16 hidden xl:block" depth={18} mx={mx} my={my} delay={1.3} float={10}>
+            <p className="text-[10px] uppercase tracking-[0.14em] text-white/50">Runway Autopilot</p>
+            <p className="mt-1 text-sm font-medium">Venture debt offer ready</p>
+            <p className="text-xs text-white/50">before you had to ask</p>
+          </Chip>
+          <Chip className="-right-16 top-72 hidden sm:block" depth={26} mx={mx} my={my} delay={1.6} float={14}>
+            <p className="text-2xl font-semibold tracking-tight">24h</p>
+            <p className="text-xs text-white/55">order → facility</p>
+          </Chip>
+          <Chip className="-left-32 bottom-28 hidden sm:block" depth={12} mx={mx} my={my} delay={1.9} float={8}>
+            <p className="flex items-center gap-2 text-sm font-medium">
+              <span className="grid h-5 w-5 place-items-center rounded-full bg-emerald-400/20 text-[10px] text-emerald-300">✓</span>
+              Within your mandate
+            </p>
+          </Chip>
 
           {/* phone shadow on the "floor" */}
           <motion.div

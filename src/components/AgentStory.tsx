@@ -2,15 +2,18 @@
 
 import {
   motion,
-  useInView,
   useMotionValueEvent,
   useScroll,
   useSpring,
   useTransform,
+  type MotionValue,
 } from "motion/react";
+import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
-import { Phone3D } from "./Phone";
+import { Screen } from "./Phone";
 import { AgentsScreen, ChatCard, ChatScreen, type ChatMsg } from "./screens";
+
+const PhoneModel = dynamic(() => import("./PhoneModel").then((m) => m.PhoneModel), { ssr: false });
 
 type Scene = {
   id: string;
@@ -146,11 +149,8 @@ const SCENES: Scene[] = [
 ];
 
 function SceneText({ scene, index }: { scene: Scene; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { margin: "-45% 0px -45% 0px" });
-
   return (
-    <div ref={ref} className="flex min-h-[85vh] flex-col justify-center">
+    <div className="flex min-h-[100svh] flex-col justify-end pb-[6svh] lg:justify-center lg:pb-0">
       <div className="relative">
         {/* light behind the glass so the frosting has something to bend */}
         <div aria-hidden className="pointer-events-none absolute -left-10 top-6 h-40 w-40 rounded-full bg-[var(--orb)] blur-3xl" />
@@ -161,7 +161,7 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="liquid-glass rounded-[32px] p-8 sm:p-10"
+          className="liquid-glass rounded-[32px] p-7 sm:p-10"
         >
           <div className="flex items-center justify-between">
             <span className="accent-pill rounded-full border px-3 py-1 text-xs font-medium tracking-wide">
@@ -169,29 +169,13 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
             </span>
             <span className="font-mono text-xs text-white/35">0{index + 1} / 0{SCENES.length}</span>
           </div>
-          <h3 className="mt-6 text-4xl font-semibold tracking-[-0.035em] sm:text-[2.75rem] sm:leading-[1.05]">{scene.title}</h3>
-          <p className="mt-4 max-w-md text-[17px] leading-relaxed text-white/60">{scene.body}</p>
-          <div className="mt-8 flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 px-5 py-4">
+          <h3 className="mt-5 text-3xl font-semibold tracking-[-0.035em] sm:mt-6 sm:text-[2.75rem] sm:leading-[1.05]">{scene.title}</h3>
+          <p className="mt-4 max-w-md text-[16px] leading-relaxed text-white/60 sm:text-[17px]">{scene.body}</p>
+          <div className="mt-6 flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 px-5 py-4 sm:mt-8">
             <span className="text-3xl font-semibold tracking-tight text-gradient">{scene.stat[0]}</span>
             <span className="h-8 w-px bg-white/10" />
             <span className="text-sm leading-snug text-white/55">{scene.stat[1]}</span>
           </div>
-        </motion.div>
-      </div>
-
-      {/* mobile: each scene carries its own phone */}
-      <div className="mt-12 flex justify-center [perspective:1400px] lg:hidden">
-        <motion.div
-          initial={{ rotateY: -50, rotateX: 12 }}
-          whileInView={{ rotateY: -12, rotateX: 5 }}
-          viewport={{ amount: 0.4 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{ transformStyle: "preserve-3d" }}
-          className="scale-[0.92]"
-        >
-          <Phone3D>
-            {inView || index === 0 ? (scene.roster ? <AgentsScreen /> : <ChatScreen title={scene.chatTitle} messages={scene.messages} />) : null}
-          </Phone3D>
         </motion.div>
       </div>
     </div>
@@ -200,9 +184,9 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
 
 const GLOWS = ["var(--glow-1)", "var(--glow-2)", "var(--glow-3)", "var(--glow-4)", "var(--glow-1)"];
 
-// Desktop: a sticky phone that turns a full revolution between scenes.
+// A sticky iPhone that turns a full revolution between scenes.
 // The screen swaps while its back is facing the viewer.
-function SpinningPhone({ progress }: { progress: ReturnType<typeof useScroll>["scrollYProgress"] }) {
+function SpinningPhone({ progress }: { progress: MotionValue<number> }) {
   const n = SCENES.length;
   const input: number[] = [];
   const output: number[] = [];
@@ -214,15 +198,15 @@ function SpinningPhone({ progress }: { progress: ReturnType<typeof useScroll>["s
   }
   const raw = useTransform(progress, input, output);
   const rotateY = useSpring(raw, { stiffness: 70, damping: 18, mass: 0.6 });
-  // lean back and shrink a touch while turning
+  // lean back, lift and shrink a touch while turning
   const turn = useTransform(rotateY, (a) => Math.abs(Math.sin((a * Math.PI) / 360)));
   const rotateX = useTransform(turn, [0, 1], [4, 14]);
-  const scale = useTransform(turn, [0, 1], [1, 0.86]);
+  const scale = useTransform(turn, [0, 1], [1, 0.88]);
   const rotateZ = useTransform(progress, [0, 1], [-3, 3]);
   const orbit = useTransform(rotateY, (a) => a / 4);
   // rest a little turned so the phone's thickness stays visible
-  const displayY = useTransform(rotateY, (a) => a - 24);
-  const lift = useTransform(turn, [0, 1], [0, -30]);
+  const displayY = useTransform(rotateY, (a) => a - 22);
+  const lift = useTransform(turn, [0, 1], [0, 0.25]);
 
   const [active, setActive] = useState(0);
   useMotionValueEvent(rotateY, "change", (a) => {
@@ -231,42 +215,37 @@ function SpinningPhone({ progress }: { progress: ReturnType<typeof useScroll>["s
   });
 
   return (
-    <div className="relative">
+    <div className="absolute inset-x-0 top-0 h-[64svh] lg:inset-0 lg:h-full">
       <div
         aria-hidden
-        className="absolute left-1/2 top-1/2 -z-10 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[110px] transition-[background] duration-1000"
+        className="absolute left-1/2 top-1/2 h-[520px] w-[520px] max-w-[100vw] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[110px] transition-[background] duration-1000"
         style={{ background: `radial-gradient(closest-side, ${GLOWS[active]}, transparent)` }}
       />
       {/* orbit ring */}
       <motion.div
         aria-hidden
         style={{ rotateZ: orbit }}
-        className="absolute left-1/2 top-1/2 -z-10 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/10"
+        className="absolute left-1/2 top-1/2 hidden h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/10 lg:block"
       />
 
-      <div className="[perspective:1600px]">
-        <motion.div
-          animate={{ y: [0, -12, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformStyle: "preserve-3d" }}
-        >
-          <motion.div
-            style={{ rotateY: displayY, rotateX, rotateZ, scale, y: lift, transformStyle: "preserve-3d" }}
-            className="relative"
-          >
-            <Phone3D angle={displayY}>
-              {SCENES[active].roster ? (
-                <AgentsScreen key={active} />
-              ) : (
-                <ChatScreen key={active} title={SCENES[active].chatTitle} messages={SCENES[active].messages} />
-              )}
-            </Phone3D>
-          </motion.div>
-        </motion.div>
-      </div>
+      <PhoneModel
+        className="absolute inset-0"
+        cameraZ={11}
+        motion={{ rotateY: displayY, rotateX, rotateZ, scale, lift }}
+        screenKey={active}
+        screen={
+          <Screen>
+            {SCENES[active].roster ? (
+              <AgentsScreen />
+            ) : (
+              <ChatScreen title={SCENES[active].chatTitle} messages={SCENES[active].messages} />
+            )}
+          </Screen>
+        }
+      />
 
       {/* progress rail */}
-      <div className="absolute -left-20 top-1/2 flex -translate-y-1/2 flex-col gap-3">
+      <div className="absolute left-6 top-1/2 hidden -translate-y-1/2 flex-col gap-3 lg:flex">
         {SCENES.map((s, i) => (
           <span
             key={s.id}
@@ -298,17 +277,17 @@ export function AgentStory() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-20">
-          <div ref={scenesRef}>
+        <div ref={scenesRef} className="relative mt-10">
+          {/* one sticky phone for every screen size; the copy scrolls past it */}
+          <div className="pointer-events-none sticky top-0 h-[100svh]">
+            <div className="absolute inset-0 lg:left-1/2">
+              <SpinningPhone progress={scrollYProgress} />
+            </div>
+          </div>
+          <div className="relative -mt-[100svh] lg:w-1/2 lg:pr-12">
             {SCENES.map((s, i) => (
               <SceneText key={s.id} scene={s} index={i} />
             ))}
-          </div>
-
-          <div className="hidden lg:block">
-            <div className="sticky top-0 flex h-screen items-center justify-center">
-              <SpinningPhone progress={scrollYProgress} />
-            </div>
           </div>
         </div>
       </div>
