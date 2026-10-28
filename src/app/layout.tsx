@@ -36,6 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        <link rel="preload" href="/models/iphone17pro.glb" as="fetch" crossOrigin="anonymous" />
       </head>
       <body className="min-h-full font-sans">{children}</body>
     </html>

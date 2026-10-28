@@ -87,16 +87,22 @@ export function Hero() {
       {/* perspective grid floor */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[45vh] [perspective:600px]">
         <div
-          className="absolute inset-x-[-50%] bottom-[-20%] h-[160%] origin-bottom [transform:rotateX(62deg)]"
+          className="absolute inset-x-[-50%] bottom-[-20%] h-[160%] origin-bottom overflow-hidden [transform:rotateX(62deg)]"
           style={{
-            backgroundImage:
-              "linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)",
-            backgroundSize: "64px 64px",
             maskImage: "linear-gradient(to top, black 10%, transparent 80%)",
             WebkitMaskImage: "linear-gradient(to top, black 10%, transparent 80%)",
-            animation: "grid-move 6s linear infinite",
           }}
-        />
+        >
+          <div
+            className="absolute inset-x-0 -top-16 bottom-0 will-change-transform"
+            style={{
+              backgroundImage:
+                "linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)",
+              backgroundSize: "64px 64px",
+              animation: "grid-move 6s linear infinite",
+            }}
+          />
+        </div>
       </div>
       {/* horizon line */}
       <div className="absolute inset-x-0 bottom-[-55vw] -z-10 mx-auto h-[80vw] w-[140vw] -translate-x-[14vw] rounded-[100%] border-t border-white/20 bg-[radial-gradient(ellipse_at_top,var(--orb),transparent_60%)]" />

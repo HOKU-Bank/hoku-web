@@ -2,7 +2,7 @@
 
 import { Environment, Lightformer, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import type { MotionValue } from "motion/react";
+import { useInView, type MotionValue } from "motion/react";
 import { Suspense, useLayoutEffect, useMemo, useRef, type ReactNode, type RefObject } from "react";
 import * as THREE from "three";
 
@@ -90,6 +90,14 @@ function Iphone({ motion, screenRef }: { motion: PhoneMotion; screenRef: RefObje
           m.envMapIntensity = 0.35;
         } else {
           m.envMapIntensity = 1.1;
+        }
+        // Transmission makes three.js render the whole scene a second time
+        // every frame; the lens glass looks the same without it.
+        const phys = m as THREE.MeshPhysicalMaterial;
+        if (phys.transmission) {
+          phys.transmission = 0;
+          phys.transparent = true;
+          phys.opacity = Math.min(phys.opacity ?? 1, 0.35);
         }
         m.needsUpdate = true;
       }
@@ -186,12 +194,16 @@ export function PhoneModel({
   cameraZ?: number;
 }) {
   const screenRef = useRef<HTMLDivElement>(null);
+  const hostRef = useRef<HTMLDivElement>(null);
+  // Only spend GPU time while the phone is (nearly) on screen.
+  const visible = useInView(hostRef, { margin: "200px 0px" });
   return (
-    <div className={`isolate overflow-hidden ${className}`}>
+    <div ref={hostRef} className={`isolate overflow-hidden ${className}`}>
       <Canvas
-        dpr={[1, 2]}
+        frameloop={visible ? "always" : "never"}
+        dpr={[1, 1.5]}
         camera={{ position: [0, 0, cameraZ], fov: 26 }}
-        gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance", toneMapping: THREE.ACESFilmicToneMapping }}
         style={{ pointerEvents: "none" }}
       >
         <ambientLight intensity={0.35} />
@@ -205,7 +217,7 @@ export function PhoneModel({
       <div
         ref={screenRef}
         key={screenKey}
-        className="pointer-events-none absolute left-0 top-0 h-[640px] w-[300px] origin-top-left"
+        className="pointer-events-none absolute left-0 top-0 h-[640px] w-[300px] origin-top-left will-change-transform"
         style={{ visibility: "hidden" }}
       >
         {screen}

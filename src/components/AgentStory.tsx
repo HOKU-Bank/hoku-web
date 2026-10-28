@@ -157,7 +157,7 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
         <div aria-hidden className="pointer-events-none absolute -bottom-6 right-6 h-32 w-56 rounded-full bg-[var(--orb)] opacity-60 blur-3xl" />
 
         <motion.div
-          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+          initial={{ opacity: 0, y: 40, filter: "blur(6px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
