@@ -1,6 +1,6 @@
 "use client";
 
-import { animate, motion, useInView, useMotionValue, useTransform } from "motion/react";
+import { animate, motion, useInView, useMotionValue, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
 import { Aurora } from "./Aurora";
 import { WaitlistForm } from "./WaitlistForm";
@@ -59,32 +59,142 @@ export function Stats() {
 
 /* ------------------------------------------------------------------ */
 
-const WHY_NOW = [
+type Bar = { label: string; value: number; display: string; strong?: boolean };
+
+const WHY_NOW: { k: string; title: string; body: string; caption: string; bars: Bar[]; max: number }[] = [
   {
     k: "€1M",
     title: "A rare licence window",
-    body: "Since January 2026 Latvia grants a full EU bank licence from €1M of capital, passported to all 30 EEA states.",
+    body: "Since January 2026 Latvia grants a full EU bank licence from €1M of capital instead of €5M, passported to all 30 EEA states. Only a handful of players have stepped through.",
+    caption: "Initial capital for a full EU bank licence",
+    max: 5,
+    bars: [
+      { label: "Before 2026", value: 5, display: "€5M" },
+      { label: "Latvia, from Jan 2026", value: 1, display: "€1M", strong: true },
+    ],
   },
   {
     k: "€150B",
     title: "Europe is reindustrialising",
-    body: "The SAFE defence programme funds the orders. Thousands of SME suppliers still need the working capital to deliver them.",
+    body: "The SAFE defence programme funds the orders. The thousands of SME suppliers who deliver them still need the working capital, guarantees and FX that only a bank provides.",
+    caption: "SAFE defence loans, € billions",
+    max: 150,
+    bars: [
+      { label: "SAFE total", value: 150, display: "€150B" },
+      { label: "Poland", value: 43.7, display: "€43.7B", strong: true },
+      { label: "Latvia", value: 3.49, display: "€3.5B", strong: true },
+    ],
   },
   {
     k: "5%",
     title: "Payments alone don't pay",
-    body: "Digital banks hold 19% of accounts but 5% of revenue. Credit does, which is why neobanks are now chasing licences.",
+    body: "Digital banks proved the stack but not the economics. Credit is what pays, which is why Qonto and Mercury are now chasing bank licences. We start with one.",
+    caption: "Digital banks' share of EU retail banking",
+    max: 20,
+    bars: [
+      { label: "Accounts", value: 19, display: "19%" },
+      { label: "Revenue", value: 5, display: "5%", strong: true },
+    ],
   },
   {
-    k: "AI",
-    title: "Underwriting got cheap",
-    body: "Agents now handle onboarding, credit memos and AML triage for cents, making small-ticket business lending profitable.",
+    k: "43%",
+    title: "AI made underwriting cheap",
+    body: "Agents handle onboarding, credit memos and AML triage for cents. Small-ticket business lending becomes profitable, and the bank runs leaner than any incumbent.",
+    caption: "Cost-to-income ratio",
+    max: 60,
+    bars: [
+      { label: "EU bank average", value: 52.3, display: "52.3%" },
+      { label: "Horaizon, Year 5 plan", value: 43, display: "43%", strong: true },
+    ],
   },
 ];
 
+function BarChart({ bars, max, caption }: { bars: Bar[]; max: number; caption: string }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+      <p className="text-xs text-white/50">{caption}</p>
+      <div className="mt-4 space-y-3.5">
+        {bars.map((b, i) => (
+          <div key={b.label}>
+            <div className="flex items-baseline justify-between text-[13px]">
+              <span className={b.strong ? "text-white/85" : "text-white/50"}>{b.label}</span>
+              <span className={`font-semibold tabular-nums ${b.strong ? "text-white" : "text-white/55"}`}>{b.display}</span>
+            </div>
+            <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-white/[0.07]">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${Math.max(2, (b.value / max) * 100)}%` }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 1.2, delay: 0.2 + i * 0.15, ease }}
+                className={`h-full rounded-full ${b.strong ? "bg-[linear-gradient(90deg,var(--accent),var(--accent-strong))]" : "bg-white/25"}`}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function WhyNow() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
+  const lineH = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  return (
+    <div className="mt-28 grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+      <div className="lg:sticky lg:top-32 lg:self-start">
+        <Reveal>
+          <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">Why now</p>
+          <h3 className="mt-5 text-[clamp(2.25rem,4.5vw,3.75rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
+            Four windows,
+            <br />
+            <span className="text-gradient">open at once.</span>
+          </h3>
+          <p className="mt-6 max-w-sm text-lg leading-relaxed text-white/60">
+            Regulation, capital, market economics and technology have lined up
+            for the first time. Each one alone would be an opening. Together
+            they are the moment.
+          </p>
+        </Reveal>
+      </div>
+
+      <div ref={ref} className="relative space-y-6 pl-8 sm:pl-10">
+        {/* progress rail */}
+        <div aria-hidden className="absolute bottom-4 left-0 top-4 w-px bg-white/10">
+          <motion.div style={{ height: lineH }} className="w-px bg-[linear-gradient(180deg,transparent,var(--accent-strong))] shadow-[0_0_12px_var(--accent)]" />
+        </div>
+
+        {WHY_NOW.map((w, i) => (
+          <Reveal key={w.title}>
+            <div className="relative">
+              <span aria-hidden className="absolute -left-8 top-9 grid h-4 w-4 -translate-x-1/2 place-items-center sm:-left-10">
+                <span className="h-2.5 w-2.5 rounded-full bg-[var(--accent-strong)] shadow-[0_0_14px_var(--accent)]" />
+              </span>
+              <div className="liquid-glass grid gap-6 rounded-[28px] p-7 sm:p-8 md:grid-cols-[1fr_0.95fr] md:items-center">
+                <div className="relative">
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-mono text-xs text-white/40">0{i + 1}</span>
+                    <span className="text-5xl font-semibold tracking-[-0.045em] text-gradient">{w.k}</span>
+                  </div>
+                  <h4 className="mt-4 text-xl font-semibold tracking-tight">{w.title}</h4>
+                  <p className="mt-2 text-[15px] leading-relaxed text-white/60">{w.body}</p>
+                </div>
+                <div className="relative">
+                  <BarChart bars={w.bars} max={w.max} caption={w.caption} />
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Vision() {
   return (
-    <section id="vision" className="relative overflow-hidden px-6 py-36">
+    <section id="vision" className="relative overflow-x-clip px-6 py-36">
       <div aria-hidden className="pointer-events-none absolute -left-40 top-1/3 h-[480px] w-[640px] rounded-full bg-[var(--orb)] blur-[130px]" />
       <div className="relative mx-auto max-w-6xl">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-end">
@@ -110,21 +220,7 @@ export function Vision() {
           </Reveal>
         </div>
 
-        <Reveal className="mt-20">
-          <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">Why now</p>
-        </Reveal>
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {WHY_NOW.map((w, i) => (
-            <Reveal key={w.title} delay={i * 0.08}>
-              <div className="liquid-glass flex h-full flex-col rounded-[28px] p-7">
-                <span className="relative font-mono text-xs text-white/40">0{i + 1}</span>
-                <span className="relative mt-5 text-4xl font-semibold tracking-[-0.04em] text-gradient">{w.k}</span>
-                <h3 className="relative mt-4 text-lg font-semibold tracking-tight">{w.title}</h3>
-                <p className="relative mt-2 text-[15px] leading-relaxed text-white/60">{w.body}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <WhyNow />
       </div>
     </section>
   );
