@@ -85,9 +85,9 @@ function Iphone({ motion, screenRef }: { motion: PhoneMotion; screenRef: RefObje
           m.depthWrite = true;
           // The export leaves the body fully metallic, so the frame mirrors the
           // studio lights as silver bands; keep it a satin anodised colour.
-          m.metalness = 0.35;
-          m.roughness = 0.55;
-          m.envMapIntensity = 0.55;
+          m.metalness = 0.3;
+          m.roughness = 0.68;
+          m.envMapIntensity = 0.35;
         } else {
           m.envMapIntensity = 1.1;
         }
