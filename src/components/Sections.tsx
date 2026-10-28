@@ -59,6 +59,79 @@ export function Stats() {
 
 /* ------------------------------------------------------------------ */
 
+const WHY_NOW = [
+  {
+    k: "€1M",
+    title: "A rare licence window",
+    body: "Since January 2026 Latvia grants a full EU bank licence from €1M of capital, passported to all 30 EEA states.",
+  },
+  {
+    k: "€150B",
+    title: "Europe is reindustrialising",
+    body: "The SAFE defence programme funds the orders. Thousands of SME suppliers still need the working capital to deliver them.",
+  },
+  {
+    k: "5%",
+    title: "Payments alone don't pay",
+    body: "Digital banks hold 19% of accounts but 5% of revenue. Credit does, which is why neobanks are now chasing licences.",
+  },
+  {
+    k: "AI",
+    title: "Underwriting got cheap",
+    body: "Agents now handle onboarding, credit memos and AML triage for cents, making small-ticket business lending profitable.",
+  },
+];
+
+export function Vision() {
+  return (
+    <section id="vision" className="relative overflow-hidden px-6 py-36">
+      <div aria-hidden className="pointer-events-none absolute -left-40 top-1/3 h-[480px] w-[640px] rounded-full bg-[var(--orb)] blur-[130px]" />
+      <div className="relative mx-auto max-w-6xl">
+        <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-end">
+          <Reveal>
+            <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">Our vision</p>
+            <h2 className="mt-5 text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[1] tracking-[-0.045em]">
+              Europe doesn&apos;t lack innovation.
+              <br />
+              <span className="text-gradient">It lacks a bank built for it.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="text-lg leading-relaxed text-white/65">
+              Technology SMEs are too big for a neobank, too small for a debt
+              fund and too asset-light for a traditional bank. We are building
+              the licensed European bank that finances them on live data, run by
+              AI agents from day one.
+            </p>
+            <div className="mt-6 flex items-baseline gap-3">
+              <span className="text-5xl font-semibold tracking-[-0.04em] text-gradient">€39B</span>
+              <span className="text-sm text-white/55">SME financing gap in Europe, every year</span>
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal className="mt-20">
+          <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">Why now</p>
+        </Reveal>
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {WHY_NOW.map((w, i) => (
+            <Reveal key={w.title} delay={i * 0.08}>
+              <div className="liquid-glass flex h-full flex-col rounded-[28px] p-7">
+                <span className="relative font-mono text-xs text-white/40">0{i + 1}</span>
+                <span className="relative mt-5 text-4xl font-semibold tracking-[-0.04em] text-gradient">{w.k}</span>
+                <h3 className="relative mt-4 text-lg font-semibold tracking-tight">{w.title}</h3>
+                <p className="relative mt-2 text-[15px] leading-relaxed text-white/60">{w.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
 const ICONS: Record<string, React.ReactNode> = {
   Banking: (
     <path d="M3 10.5 12 5l9 5.5M5 10.5V18m4.67-7.5V18m4.66-7.5V18M19 10.5V18M3.5 19.5h17" />
@@ -172,8 +245,8 @@ export function Platform() {
 /* ------------------------------------------------------------------ */
 
 const TEAM = [
-  { name: "Maciej Jarząb", role: "CEO", photo: "/team/jarzab.jpg", bio: "Founded and sold Braight, AI credit scoring for 3 of Poland's 5 largest banks. Forbes 30 Under 30." },
-  { name: "Tomasz Sekutowicz", role: "COO", photo: "/team/sekutowicz.jpg", bio: "Nearly 30 years in payments. Built the FUPS EMI licence in Vilnius; ex-Tietoevry Banking." },
+  { name: "Maciej Jarząb", role: "Co-founder & CEO", photo: "/team/jarzab.jpg", bio: "Founded and sold Braight, AI credit scoring for 3 of Poland's 5 largest banks. Forbes 30 Under 30." },
+  { name: "Tomasz Sekutowicz", role: "Co-founder & COO", photo: "/team/sekutowicz.jpg", bio: "Nearly 30 years in payments. Built the FUPS EMI licence in Vilnius; ex-Tietoevry Banking." },
   { name: "Maciej Żukowski", role: "CFO", photo: "/team/zukowski.jpg", bio: "Ex-Director of Tax at PKO BP, ex-President of PKO Finance AB, ex-Ministry of Finance." },
   { name: "Tomasz Mielnicki", role: "CCO", photo: "/team/mielnicki.jpg", bio: "20 years in bank compliance. Chairs the Polish Bank Association's identification group." },
 ];

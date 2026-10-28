@@ -83,18 +83,16 @@ export function PhoneBack({ className = "" }: { className?: string }) {
       <div className="absolute inset-0 bg-[radial-gradient(90%_55%_at_20%_10%,rgba(190,205,255,0.16),transparent_60%),radial-gradient(80%_50%_at_90%_95%,rgba(150,110,220,0.18),transparent_60%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_35%,rgba(255,255,255,0.05)_48%,transparent_60%)]" />
 
-      {/* camera plateau */}
-      <div className="absolute left-[16px] top-[16px] h-[150px] w-[150px] rounded-[38px] bg-[linear-gradient(150deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04))] shadow-[0_10px_24px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-1px_0_rgba(0,0,0,0.4)] ring-1 ring-white/10">
-        <Lens x={10} y={10} />
-        <Lens x={10} y={82} />
-        <Lens x={82} y={46} />
-        {/* flash */}
-        <span className="absolute left-[100px] top-[14px] h-[22px] w-[22px] rounded-full bg-[radial-gradient(circle,#fff6dc_0%,#e8d8a8_45%,#8a7f63_100%)] shadow-[inset_0_0_0_2px_rgba(0,0,0,0.25)]" />
-        {/* LiDAR */}
-        <span className="absolute left-[102px] top-[112px] h-[20px] w-[20px] rounded-full bg-[radial-gradient(circle,#2a2d38,#07080c)] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.08)]" />
-        {/* mic */}
-        <span className="absolute left-[130px] top-[76px] h-[5px] w-[5px] rounded-full bg-black/70" />
-      </div>
+      {/* frosted matte texture */}
+      <div
+        className="absolute inset-0 opacity-[0.18] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+        }}
+      />
+      {/* soft shadow the camera bump casts on the glass */}
+      <div className="absolute left-[10px] top-[18px] h-[160px] w-[160px] rounded-[40px] bg-black/35 blur-[10px]" />
 
       {/* brand */}
       <div className="absolute inset-x-0 top-[52%] flex -translate-y-1/2 flex-col items-center">
@@ -119,6 +117,98 @@ export function PhoneBack({ className = "" }: { className?: string }) {
         />
         <span className="mt-2 pl-[0.62em] text-[13px] font-semibold tracking-[0.62em] text-white/75">BANK</span>
       </div>
+    </div>
+  );
+}
+
+// A short 3D extrusion: `layers` copies of a shape stacked from z0 to z1.
+function Extrude({
+  z0,
+  z1,
+  layers,
+  className,
+  color,
+}: {
+  z0: number;
+  z1: number;
+  layers: number;
+  className: string;
+  color: (t: number) => string;
+}) {
+  return (
+    <>
+      {Array.from({ length: layers }, (_, i) => {
+        const t = (i + 0.5) / layers;
+        return (
+          <div
+            key={i}
+            aria-hidden
+            className={`absolute ${className}`}
+            style={{ transform: `translateZ(${z0 + (z1 - z0) * t}px)`, background: color(t) }}
+          />
+        );
+      })}
+    </>
+  );
+}
+
+const PLATEAU = { x: 16, y: 16, size: 150, h: 3.5 };
+const LENSES = [
+  { x: 10, y: 10 },
+  { x: 10, y: 82 },
+  { x: 82, y: 46 },
+];
+
+// Raised camera island with protruding lens barrels, built in the back
+// plate's own 3D space (positive z points out of the back).
+function CameraBump() {
+  const lensH = 5;
+  return (
+    <div
+      aria-hidden
+      className="absolute"
+      style={{ left: PLATEAU.x, top: PLATEAU.y, width: PLATEAU.size, height: PLATEAU.size, transformStyle: "preserve-3d" }}
+    >
+      {/* island walls */}
+      <Extrude
+        z0={0}
+        z1={PLATEAU.h}
+        layers={6}
+        className="inset-0 rounded-[38px]"
+        color={(t) => `hsl(240 3% ${30 + Math.sin(Math.PI * t) * 14}%)`}
+      />
+      {/* island top: frosted glass */}
+      <div
+        className="absolute inset-0 rounded-[38px] bg-[linear-gradient(150deg,#55555c_0%,#2e2e33_45%,#1f1f23_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(0,0,0,0.5)]"
+        style={{ transform: `translateZ(${PLATEAU.h}px)` }}
+      >
+        <div className="absolute inset-0 rounded-[38px] bg-[radial-gradient(120%_80%_at_20%_0%,rgba(255,255,255,0.14),transparent_60%)]" />
+        {/* flash */}
+        <span className="absolute left-[100px] top-[14px] h-[22px] w-[22px] rounded-full bg-[radial-gradient(circle,#fff6dc_0%,#e8d8a8_45%,#8a7f63_100%)] shadow-[inset_0_0_0_2px_rgba(0,0,0,0.25),0_0_0_2px_rgba(255,255,255,0.08)]" />
+        {/* LiDAR */}
+        <span className="absolute left-[102px] top-[112px] h-[20px] w-[20px] rounded-full bg-[radial-gradient(circle,#2a2d38,#07080c)] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.08)]" />
+        {/* mic */}
+        <span className="absolute left-[130px] top-[76px] h-[5px] w-[5px] rounded-full bg-black/70" />
+      </div>
+      {/* lens barrels */}
+      {LENSES.map((l, i) => (
+        <div
+          key={i}
+          className="absolute h-[58px] w-[58px]"
+          style={{ left: l.x, top: l.y, transformStyle: "preserve-3d" }}
+        >
+          <Extrude
+            z0={PLATEAU.h}
+            z1={PLATEAU.h + lensH}
+            layers={8}
+            className="inset-0 rounded-full"
+            color={(t) => `hsl(240 4% ${38 + Math.sin(Math.PI * t) * 30}%)`}
+          />
+          <div className="absolute inset-0" style={{ transform: `translateZ(${PLATEAU.h + lensH}px)` }}>
+            <Lens x={0} y={0} />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -239,9 +329,13 @@ export function Phone3D({
       {/* back plate */}
       <div
         className="absolute inset-0"
-        style={{ transform: `translateZ(${-DEPTH / 2}px) rotateY(180deg)`, backfaceVisibility: "hidden" }}
+        style={{ transform: `translateZ(${-DEPTH / 2}px) rotateY(180deg)`, transformStyle: "preserve-3d" }}
       >
-        <PhoneBack />
+        <div style={{ backfaceVisibility: "hidden" }}>
+          <PhoneBack />
+          {angle && <Glare angle={angle} back />}
+        </div>
+        <CameraBump />
       </div>
 
       {/* front */}
@@ -256,15 +350,15 @@ export function Phone3D({
   );
 }
 
-function Glare({ angle }: { angle: MotionValue<number> }) {
+function Glare({ angle, back = false }: { angle: MotionValue<number>; back?: boolean }) {
   const background = useTransform(angle, (a) => {
-    const pos = 50 + Math.sin((a * Math.PI) / 180) * 120;
+    const pos = 50 + Math.sin((a * Math.PI) / 180) * (back ? -120 : 120);
     return `linear-gradient(115deg, transparent ${pos - 30}%, rgba(255,255,255,0.13) ${pos}%, transparent ${pos + 22}%)`;
   });
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none absolute inset-[10px] z-40 rounded-[43px] mix-blend-screen"
+      className={`pointer-events-none absolute z-40 mix-blend-screen ${back ? "inset-0 rounded-[52px]" : "inset-[10px] rounded-[43px]"}`}
       style={{ background }}
     />
   );

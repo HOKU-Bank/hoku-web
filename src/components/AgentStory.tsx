@@ -10,7 +10,7 @@ import {
 } from "motion/react";
 import { useRef, useState } from "react";
 import { Phone3D } from "./Phone";
-import { ChatCard, ChatScreen, type ChatMsg } from "./screens";
+import { AgentsScreen, ChatCard, ChatScreen, type ChatMsg } from "./screens";
 
 type Scene = {
   id: string;
@@ -20,6 +20,8 @@ type Scene = {
   stat: [string, string];
   chatTitle: string;
   messages: ChatMsg[];
+  /** show the agent roster instead of a chat */
+  roster?: boolean;
 };
 
 const SCENES: Scene[] = [
@@ -131,6 +133,16 @@ const SCENES: Scene[] = [
       },
     ],
   },
+  {
+    id: "more",
+    eyebrow: "And much more coming",
+    title: "This is just the beginning.",
+    body: "Receivables, Tender Agent, Dual-Use Co-pilot and Loan Conditions Guard are joining Autopilot, with every agent proving itself in shadow mode first.",
+    stat: ["8+", "agents on the roadmap"],
+    chatTitle: "Agents",
+    messages: [],
+    roster: true,
+  }
 ];
 
 function SceneText({ scene, index }: { scene: Scene; index: number }) {
@@ -178,7 +190,7 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
           className="scale-[0.92]"
         >
           <Phone3D>
-            {inView || index === 0 ? <ChatScreen title={scene.chatTitle} messages={scene.messages} /> : null}
+            {inView || index === 0 ? (scene.roster ? <AgentsScreen /> : <ChatScreen title={scene.chatTitle} messages={scene.messages} />) : null}
           </Phone3D>
         </motion.div>
       </div>
@@ -186,7 +198,7 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
   );
 }
 
-const GLOWS = ["var(--glow-1)", "var(--glow-2)", "var(--glow-3)", "var(--glow-4)"];
+const GLOWS = ["var(--glow-1)", "var(--glow-2)", "var(--glow-3)", "var(--glow-4)", "var(--glow-1)"];
 
 // Desktop: a sticky phone that turns a full revolution between scenes.
 // The screen swaps while its back is facing the viewer.
@@ -243,7 +255,11 @@ function SpinningPhone({ progress }: { progress: ReturnType<typeof useScroll>["s
             className="relative"
           >
             <Phone3D angle={displayY}>
-              <ChatScreen key={active} title={SCENES[active].chatTitle} messages={SCENES[active].messages} />
+              {SCENES[active].roster ? (
+                <AgentsScreen key={active} />
+              ) : (
+                <ChatScreen key={active} title={SCENES[active].chatTitle} messages={SCENES[active].messages} />
+              )}
             </Phone3D>
           </motion.div>
         </motion.div>
@@ -270,14 +286,15 @@ export function AgentStory() {
     <section id="autopilot" className="relative py-32">
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">Horaizon Autopilot</p>
+          <p className="accent-text text-sm font-medium uppercase tracking-[0.2em]">Imagine that…</p>
           <h2 className="mt-5 text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
-            Your finance back office,{" "}
-            <span className="text-gradient">on autopilot.</span>
+            Building the future of{" "}
+            <span className="text-gradient">agentic banking.</span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg text-white/60">
-            Tell it what you want in plain language. Agents act 24/7 within the
-            mandate your CFO sets once, and every action is logged.
+            …your finance back office ran itself. Tell Autopilot what you want in
+            plain language: agents act 24/7 within the mandate your CFO sets
+            once, and every action is logged.
           </p>
         </div>
 

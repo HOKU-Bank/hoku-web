@@ -19,7 +19,7 @@
 [data-theme="dark"] {
   --color-white: #fff;
   --color-black: #000;
-  --ink: #050505;
+  --ink: #06060b;
   --line: rgba(255, 255, 255, 0.1);
   --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%);
   --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 60px -20px rgba(0, 0, 0, 0.6);
@@ -27,43 +27,45 @@
   --lg-border: rgba(255, 255, 255, 0.14);
   --lg-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 -1px 0 rgba(255, 255, 255, 0.06), inset 0 0 40px rgba(255, 255, 255, 0.03), 0 30px 80px -30px rgba(0, 0, 0, 0.8);
   --lg-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.12) 0%, transparent 28%, transparent 70%, rgba(255, 255, 255, 0.05) 100%);
-  --text-grad: linear-gradient(100deg, #ffffff 0%, #d9dce3 30%, #8f939d 55%, #f4f5f7 78%, #a9adb7 100%);
-  --aurora-1: rgba(255, 255, 255, 0.2);
-  --aurora-2: rgba(200, 205, 215, 0.16);
-  --aurora-3: rgba(255, 255, 255, 0.1);
-  --grid-line: rgba(255, 255, 255, 0.1);
-  --orb: rgba(255, 255, 255, 0.12);
-  --spot: rgba(255, 255, 255, 0.09);
-  --glow-1: #3b3d46;
-  --glow-2: #2c2e35;
-  --glow-3: #45474f;
-  --glow-4: #34363d;
+  --text-grad: linear-gradient(100deg, #ffffff 0%, #dfe2f5 30%, #9c9cc4 55%, #f4f3fb 78%, #b3b2cf 100%);
+  /* mostly monochrome, with a faint aurora so it never reads as greyscale */
+  --aurora-1: rgba(70, 92, 230, 0.32);
+  --aurora-2: rgba(140, 100, 240, 0.24);
+  --aurora-3: rgba(210, 95, 170, 0.14);
+  --grid-line: rgba(190, 190, 255, 0.11);
+  --orb: rgba(150, 150, 255, 0.16);
+  --spot: rgba(190, 185, 255, 0.1);
+  --glow-1: #1f2550;
+  --glow-2: #1b2a4a;
+  --glow-3: #2c2252;
+  --glow-4: #33213f;
   --logo-filter: none;
   color-scheme: dark;
 }
 
+/* Warm light: ivory paper, sand and peach light, espresso type. */
 [data-theme="light"] {
-  --color-white: #0b0b0f;
-  --color-black: #ffffff;
-  --ink: #f4f4f6;
-  --line: rgba(0, 0, 0, 0.08);
-  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.6) 100%);
-  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 20px 50px -24px rgba(20, 24, 40, 0.25);
-  --lg-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.62) 55%, rgba(255, 255, 255, 0.78) 100%);
+  --color-white: #1b1612;
+  --color-black: #fffdf9;
+  --ink: #f6f1ea;
+  --line: rgba(60, 40, 20, 0.1);
+  --glass-bg: linear-gradient(180deg, rgba(255, 252, 247, 0.85) 0%, rgba(255, 250, 243, 0.6) 100%);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 20px 50px -24px rgba(70, 45, 20, 0.22);
+  --lg-bg: linear-gradient(160deg, rgba(255, 253, 249, 0.92) 0%, rgba(255, 249, 241, 0.62) 55%, rgba(255, 251, 246, 0.8) 100%);
   --lg-border: rgba(255, 255, 255, 0.9);
-  --lg-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), inset 0 -1px 0 rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.05), 0 30px 70px -30px rgba(20, 24, 40, 0.3);
+  --lg-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), inset 0 -1px 0 rgba(80, 50, 20, 0.04), 0 0 0 1px rgba(80, 50, 20, 0.06), 0 30px 70px -30px rgba(70, 45, 20, 0.28);
   --lg-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.9) 0%, transparent 30%, transparent 70%, rgba(255, 255, 255, 0.5) 100%);
-  --text-grad: linear-gradient(100deg, #0b0b0f 0%, #3a3d46 35%, #8a8f99 58%, #1f2127 80%, #5d616b 100%);
-  --aurora-1: rgba(190, 205, 235, 0.55);
-  --aurora-2: rgba(225, 215, 240, 0.5);
-  --aurora-3: rgba(200, 225, 235, 0.45);
-  --grid-line: rgba(0, 0, 0, 0.07);
-  --orb: rgba(170, 185, 215, 0.35);
-  --spot: rgba(120, 140, 190, 0.12);
-  --glow-1: #dfe5f1;
-  --glow-2: #e3eaf2;
-  --glow-3: #e8e2f2;
-  --glow-4: #e6e9ef;
+  --text-grad: linear-gradient(100deg, #1b1612 0%, #4a3d33 35%, #a3846a 58%, #2a221c 80%, #7a6555 100%);
+  --aurora-1: rgba(246, 205, 168, 0.55);
+  --aurora-2: rgba(238, 214, 196, 0.6);
+  --aurora-3: rgba(228, 196, 214, 0.4);
+  --grid-line: rgba(90, 60, 30, 0.07);
+  --orb: rgba(240, 200, 160, 0.4);
+  --spot: rgba(200, 140, 90, 0.12);
+  --glow-1: #f3e2d0;
+  --glow-2: #f1e6da;
+  --glow-3: #efdfe2;
+  --glow-4: #f2e8dc;
   --logo-filter: invert(1);
   color-scheme: light;
 }
@@ -126,12 +128,12 @@
 }
 
 html[data-theme="light"] {
-  --phone-shadow: 0 50px 90px -40px rgba(20, 24, 40, 0.45);
+  --phone-shadow: 0 50px 90px -40px rgba(70, 45, 20, 0.45);
 }
 
 /* Accent: neutral in the mono themes, the deck's mint in "deck". */
-:root { --accent: rgba(255, 255, 255, 0.55); --accent-strong: rgba(255, 255, 255, 0.85); }
-html[data-theme="light"] { --accent: rgba(11, 11, 15, 0.55); --accent-strong: rgba(11, 11, 15, 0.85); }
+:root { --accent: #b9b6f0; --accent-strong: #dcdaff; }
+html[data-theme="light"] { --accent: #a0714a; --accent-strong: #7c5233; }
 html[data-theme="aurora"] { --accent: #b4a8ff; --accent-strong: #d4ccff; }
 html[data-theme="deck"] { --accent: #8ad1c9; --accent-strong: #add4d2; }
 

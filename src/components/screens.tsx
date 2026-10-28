@@ -272,26 +272,106 @@ export function ChatCard({
           {/* tap ripple: rings spreading like a stone dropped in water */}
           {tapped && cta && (
             <span aria-hidden className="pointer-events-none absolute left-1/2 top-1/2">
-              {[0, 0.18, 0.36].map((d) => (
+              {[0, 0.2].map((d) => (
                 <motion.span
                   key={d}
                   initial={{ scale: 0, opacity: 0.7 }}
-                  animate={{ scale: 8, opacity: 0 }}
-                  transition={{ duration: 1.4, delay: d, ease: "easeOut" }}
-                  className="absolute -left-3 -top-3 h-6 w-6 rounded-full border-2 border-white/80"
+                  animate={{ scale: 3.2, opacity: 0 }}
+                  transition={{ duration: 0.9, delay: d, ease: "easeOut" }}
+                  className="absolute -left-2.5 -top-2.5 h-5 w-5 rounded-full border-[1.5px] border-white/80"
                 />
               ))}
               <motion.span
                 initial={{ scale: 0, opacity: 0.5 }}
-                animate={{ scale: 2.2, opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="absolute -left-3 -top-3 h-6 w-6 rounded-full bg-white/70"
+                animate={{ scale: 1.6, opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="absolute -left-2.5 -top-2.5 h-5 w-5 rounded-full bg-white/70"
               />
             </span>
           )}
           <span className="relative">{confirmed ? done : cta ?? "Working…"}</span>
         </motion.div>
       )}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Agents screen: the roster switching on, with more on the way        */
+/* ------------------------------------------------------------------ */
+
+const AGENTS: { name: string; status: "Live" | "Next" | "Soon" }[] = [
+  { name: "Payables", status: "Live" },
+  { name: "Treasuries Autopilot", status: "Live" },
+  { name: "Contract-to-Cash", status: "Live" },
+  { name: "Runway Autopilot", status: "Live" },
+  { name: "Receivables", status: "Next" },
+  { name: "Tender Agent", status: "Next" },
+  { name: "Dual-Use Co-pilot", status: "Soon" },
+  { name: "Loan Conditions Guard", status: "Soon" },
+];
+
+export function AgentsScreen() {
+  const [on, setOn] = useState(0);
+  useEffect(() => {
+    if (on >= AGENTS.length) return;
+    const id = setTimeout(() => setOn((n) => n + 1), on === 0 ? 700 : 420);
+    return () => clearTimeout(id);
+  }, [on]);
+
+  return (
+    <div className="flex h-full flex-col px-4 pt-6">
+      <div className="flex items-center gap-2.5">
+        <span className="grid h-8 w-8 place-items-center rounded-full bg-white/12 ring-1 ring-white/25">
+          <img src="/horaizon-mark.png" alt="" className="h-3 w-auto" />
+        </span>
+        <div>
+          <p className="text-[12.5px] font-semibold leading-tight">Autopilot agents</p>
+          <p className="text-[10px] leading-tight text-white/50">{Math.min(on, 4)} live · more joining</p>
+        </div>
+      </div>
+
+      <div className="mt-4 space-y-1.5">
+        {AGENTS.map((a, i) => {
+          const active = i < on;
+          return (
+            <motion.div
+              key={a.name}
+              initial={{ opacity: 0, x: 12 }}
+              animate={{ opacity: active ? 1 : 0.35, x: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="flex items-center justify-between rounded-xl bg-white/[0.06] px-3 py-2"
+            >
+              <span className="text-[11.5px] font-medium">{a.name}</span>
+              <span className="flex items-center gap-2">
+                <span
+                  className={`rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide ${
+                    a.status === "Live" ? "bg-emerald-400/15 text-emerald-300" : "bg-white/10 text-white/55"
+                  }`}
+                >
+                  {a.status}
+                </span>
+                <span className={`relative h-[18px] w-[30px] rounded-full transition-colors duration-300 ${active && a.status === "Live" ? "bg-emerald-400/80" : "bg-white/15"}`}>
+                  <motion.span
+                    animate={{ x: active && a.status === "Live" ? 12 : 0 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    className="absolute left-[2px] top-[2px] h-[14px] w-[14px] rounded-full bg-white shadow"
+                  />
+                </span>
+              </span>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: on >= AGENTS.length ? 1 : 0, y: on >= AGENTS.length ? 0 : 8 }}
+        transition={{ duration: 0.5 }}
+        className="mt-3 rounded-xl border border-dashed border-white/20 px-3 py-2.5 text-center text-[11px] text-white/60"
+      >
+        + much more coming
+      </motion.div>
     </div>
   );
 }

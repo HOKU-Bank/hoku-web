@@ -25,6 +25,7 @@ export function Nav() {
         </a>
         <div className="hidden items-center gap-8 text-sm text-white/65 md:flex">
           <a href="#autopilot" className="transition hover:text-white">Autopilot</a>
+          <a href="#vision" className="transition hover:text-white">Vision</a>
           <a href="#platform" className="transition hover:text-white">Platform</a>
           <a href="#team" className="transition hover:text-white">Team</a>
         </div>

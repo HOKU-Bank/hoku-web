@@ -2,7 +2,7 @@ import { AgentMarquee } from "@/components/AgentMarquee";
 import { AgentStory } from "@/components/AgentStory";
 import { Hero } from "@/components/Hero";
 import { Nav } from "@/components/Nav";
-import { Access, Footer, Platform, Stats, Team } from "@/components/Sections";
+import { Access, Footer, Platform, Stats, Team, Vision } from "@/components/Sections";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
@@ -15,6 +15,7 @@ export default function Home() {
       <AgentMarquee />
       <AgentStory />
       <Stats />
+      <Vision />
       <Platform />
       <Team />
       <Access />
