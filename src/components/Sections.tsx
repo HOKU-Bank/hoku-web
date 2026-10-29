@@ -3,7 +3,7 @@
 import { animate, motion, useInView, useMotionValue, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
 import { Aurora } from "./Aurora";
-import { WaitlistForm } from "./WaitlistForm";
+import { ContactForm } from "./ContactForm";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -255,7 +255,7 @@ const PILLARS = [
     tag: "Autopilot",
     title: "Agents that act within your mandate",
     points: ["Payables & receivables", "Contract-to-Cash & Runway", "Tender Agent & Grant Bridge", "Loan Conditions Guard"],
-    chip: "8 agents · working 24/7",
+    chip: "100+ agents planned · working 24/7",
   },
 ];
 
@@ -393,7 +393,7 @@ const CONTACT = "m.jarzab@horaizonlabs.com";
 
 export function Access() {
   return (
-    <section id="access" className="relative isolate overflow-hidden px-6 py-40">
+    <section id="contact" className="relative isolate overflow-hidden px-6 py-40">
       <Aurora />
       <Reveal className="relative mx-auto max-w-3xl text-center">
         <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.045em]">
@@ -402,9 +402,10 @@ export function Access() {
           <span className="text-gradient">innovators deserve.</span>
         </h2>
         <p className="mx-auto mt-6 max-w-lg text-lg text-white/60">
-          We&apos;re building it now. Be among the first companies on Horaizon.
+          We&apos;re building it now. Investors and partners, talk to the
+          founders directly.
         </p>
-        <WaitlistForm />
+        <ContactForm />
       </Reveal>
     </section>
   );

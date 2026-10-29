@@ -370,7 +370,7 @@ export function AgentsScreen() {
         transition={{ duration: 0.5 }}
         className="mt-3 rounded-xl border border-dashed border-white/20 px-3 py-2.5 text-center text-[11px] text-white/60"
       >
-        + much more coming
+        + 100 more agents coming
       </motion.div>
     </div>
   );

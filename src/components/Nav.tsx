@@ -30,10 +30,10 @@ export function Nav() {
           <a href="#team" className="transition hover:text-white">Team</a>
         </div>
         <a
-          href="#access"
+          href="#contact"
           className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-white/90"
         >
-          Early access
+          Contact
         </a>
       </nav>
     </motion.header>

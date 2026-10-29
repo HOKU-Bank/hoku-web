@@ -20,14 +20,13 @@ export default function Privacy() {
           This website does not use tracking cookies.
         </p>
         <p>
-          <strong className="text-white">Early access list.</strong> When you join
-          the early access list we process your name, e-mail address, whether you
-          run a business and, if you do, its type, sector and (optionally) name.
-          We use this data only to contact you about early access to Horaizon
-          and to tailor that communication to your kind of company, on the basis of your
-          consent (Art. 6(1)(a) GDPR). You can withdraw consent at any time by
-          writing to us, and we will delete your data. Otherwise we keep it until
-          early access opens and no longer than 24 months.
+          <strong className="text-white">Contact form.</strong> When you write to
+          us through the contact form we process your name, e-mail address,
+          organisation, the capacity in which you contact us and your message.
+          We use this data only to reply to you, on the basis of your consent
+          (Art. 6(1)(a) GDPR). You can withdraw consent at any time by writing to
+          us, and we will delete your data. Otherwise we keep it no longer than
+          24 months.
         </p>
         <p>
           The data is stored with our processor Supabase in the European Union

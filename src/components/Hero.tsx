@@ -153,10 +153,10 @@ export function Hero() {
             className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
           >
             <a
-              href="#access"
+              href="#contact"
               className="group inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/90"
             >
-              Get early access
+              Get in touch
               <span className="transition group-hover:translate-x-0.5">→</span>
             </a>
             <a
