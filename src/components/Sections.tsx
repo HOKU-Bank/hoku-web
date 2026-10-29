@@ -63,14 +63,14 @@ type Bar = { label: string; value: number; display: string; strong?: boolean };
 
 const WHY_NOW: { k: string; title: string; body: string; caption: string; bars: Bar[]; max: number }[] = [
   {
-    k: "€1M",
-    title: "A rare licence window",
-    body: "Since January 2026 Latvia grants a full EU bank licence from €1M of capital instead of €5M, passported to all 30 EEA states. Only a handful of players have stepped through.",
-    caption: "Initial capital for a full EU bank licence",
-    max: 5,
+    k: "10×",
+    title: "CEE credit is wide open",
+    body: "Private debt in Central and Eastern Europe is a tenth of the Western European level. No institution in the region specialises in the €100k to €2M tickets technology SMEs actually need.",
+    caption: "Private debt as a share of GDP",
+    max: 4,
     bars: [
-      { label: "Before 2026", value: 5, display: "€5M" },
-      { label: "Latvia, from Jan 2026", value: 1, display: "€1M", strong: true },
+      { label: "Western Europe", value: 3, display: "2–4%" },
+      { label: "CEE", value: 0.35, display: "0.2–0.5%", strong: true },
     ],
   },
   {
@@ -118,7 +118,7 @@ function BarChart({ bars, max, caption }: { bars: Bar[]; max: number; caption: s
           <div key={b.label}>
             <div className="flex items-baseline justify-between text-[13px]">
               <span className={b.strong ? "text-white/85" : "text-white/50"}>{b.label}</span>
-              <span className={`font-semibold tabular-nums ${b.strong ? "text-white" : "text-white/55"}`}>{b.display}</span>
+              <span className={`whitespace-nowrap font-semibold tabular-nums ${b.strong ? "text-white" : "text-white/55"}`}>{b.display}</span>
             </div>
             <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-white/[0.07]">
               <motion.div
@@ -152,8 +152,8 @@ function WhyNow() {
             <span className="text-gradient">open at once.</span>
           </h3>
           <p className="mt-6 max-w-sm text-lg leading-relaxed text-white/60">
-            Regulation, capital, market economics and technology have lined up
-            for the first time. Each one alone would be an opening. Together
+            An open market, fresh capital, broken incumbent economics and
+            cheap AI have lined up for the first time. Each one alone would be an opening. Together
             they are the moment.
           </p>
         </Reveal>
