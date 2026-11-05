@@ -21,7 +21,7 @@ export function Nav() {
         }`}
       >
         <a href="#" aria-label="Hoku Bank home">
-          <img src="/brand/hoku-logo-dark.svg" alt="Hoku Bank" className="h-[30px] w-auto sm:h-[34px]" />
+          <img src="/brand/hoku-logo-dark.svg" alt="Hoku Bank" className="h-[40px] w-auto sm:h-[50px]" />
         </a>
         <div className="hidden flex-1 items-center justify-evenly px-8 text-[15px] text-white/65 md:flex lg:px-16">
           <a href="#autopilot" className="transition hover:text-white">Autopilot</a>

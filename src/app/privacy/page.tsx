@@ -14,7 +14,7 @@ export default function Privacy() {
       <div className="mt-8 space-y-5 leading-relaxed">
         <p>
           The controller of personal data processed through this website is
-          Horaizon Group, Warsaw, Poland.
+          Hoku Group, Warsaw, Poland.
         </p>
         <p>
           This website does not use tracking cookies.
