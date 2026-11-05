@@ -23,7 +23,7 @@ export function Nav() {
         <a href="#" aria-label="Horaizon home">
           <img src="/horaizon-logo.png" alt="Horaizon" className="theme-logo h-[26px] w-auto sm:h-[30px]" />
         </a>
-        <div className="hidden items-center gap-8 text-sm text-white/65 md:flex">
+        <div className="hidden flex-1 items-center justify-evenly px-8 text-[15px] text-white/65 md:flex lg:px-16">
           <a href="#autopilot" className="transition hover:text-white">Autopilot</a>
           <a href="#vision" className="transition hover:text-white">Vision</a>
           <a href="#platform" className="transition hover:text-white">Platform</a>
