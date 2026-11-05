@@ -16,12 +16,12 @@ export function Nav() {
       className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4"
     >
       <nav
-        className={`flex w-full max-w-6xl items-center justify-between rounded-full px-5 py-2.5 transition-all duration-500 ${
+        className={`flex w-full max-w-6xl items-center justify-between rounded-full px-5 py-1.5 transition-all duration-500 ${
           scrolled ? "glass" : "border border-transparent"
         }`}
       >
         <a href="#" aria-label="Hoku Bank home">
-          <img src="/brand/hoku-logo-dark.svg" alt="Hoku Bank" className="h-[40px] w-auto sm:h-[50px]" />
+          <img src="/brand/hoku-logo-dark.svg" alt="Hoku Bank" className="h-[48px] w-auto sm:h-[64px]" />
         </a>
         <div className="hidden flex-1 items-center justify-evenly px-8 text-[15px] text-white/65 md:flex lg:px-16">
           <a href="#autopilot" className="transition hover:text-white">Autopilot</a>

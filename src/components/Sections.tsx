@@ -416,7 +416,7 @@ export function Footer() {
     <footer className="border-t border-white/10 px-6 py-14 text-sm text-white/45">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:justify-between">
         <div className="max-w-md">
-          <img src="/brand/hoku-bank-logo-dark.svg" alt="Hoku Bank" className="h-14 w-auto opacity-90" />
+          <img src="/brand/hoku-bank-logo-dark.svg" alt="Hoku Bank" className="h-16 w-auto opacity-90" />
           <p className="mt-5 leading-relaxed">
             Hoku Bank is preparing an application for a credit institution licence
             and does not currently provide banking or other regulated services.
