@@ -16,7 +16,7 @@ export function Nav() {
       className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4"
     >
       <nav
-        className={`flex w-full max-w-6xl items-center justify-between rounded-full px-5 py-1.5 transition-all duration-500 ${
+        className={`flex w-full max-w-6xl items-center justify-between rounded-full py-3 pl-8 pr-4 transition-all sm:pl-10 sm:pr-5 duration-500 ${
           scrolled ? "glass" : "border border-transparent"
         }`}
       >
