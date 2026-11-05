@@ -20,8 +20,8 @@ export function Nav() {
           scrolled ? "glass" : "border border-transparent"
         }`}
       >
-        <a href="#" aria-label="Horaizon home">
-          <img src="/horaizon-logo.png" alt="Horaizon" className="theme-logo h-[26px] w-auto sm:h-[30px]" />
+        <a href="#" aria-label="Hoku Bank home">
+          <img src="/brand/hoku-logo-dark.svg" alt="Hoku Bank" className="h-[30px] w-auto sm:h-[34px]" />
         </a>
         <div className="hidden flex-1 items-center justify-evenly px-8 text-[15px] text-white/65 md:flex lg:px-16">
           <a href="#autopilot" className="transition hover:text-white">Autopilot</a>

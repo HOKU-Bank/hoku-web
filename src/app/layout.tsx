@@ -21,7 +21,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Horaizon | Building the European Innovation Bank",
+  title: "Hoku Bank | Building the European Innovation Bank",
   description:
     "Agentic banking and credit for Europe's innovators. One account for banking, credit and treasury, run by AI agents within the mandate your CFO sets.",
 };

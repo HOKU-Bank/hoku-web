@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy policy | Horaizon",
+  title: "Privacy policy | Hoku Bank",
 };
 
 // TODO: replace with the final policy approved by legal (controller details, KRS, DPO contact).
