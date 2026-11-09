@@ -17,7 +17,7 @@ export function Nav() {
     >
       <nav
         className={`flex w-full max-w-6xl items-center justify-between rounded-full py-3 pl-8 pr-4 transition-all sm:pl-10 sm:pr-5 duration-500 ${
-          scrolled ? "glass" : "border border-transparent"
+          scrolled ? "nav-solid" : "border border-transparent"
         }`}
       >
         <a href="#" aria-label="Hoku Bank home">
