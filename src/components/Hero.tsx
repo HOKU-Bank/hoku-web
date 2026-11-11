@@ -1,13 +1,11 @@
 "use client";
 
+import { Phone3D } from "./Phone3D";
 import { animate, motion, useMotionValue, useSpring, useTransform, useScroll, type MotionValue } from "motion/react";
-import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import { Aurora } from "./Aurora";
 import { Screen } from "./Phone";
 import { HeroScreen } from "./screens";
-
-const PhoneModel = dynamic(() => import("./PhoneModel").then((m) => m.PhoneModel), { ssr: false });
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -174,7 +172,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.1 }}
           style={{ y: phoneY }}
           className="relative mx-auto h-[660px] w-full max-w-[520px]">
-          <PhoneModel
+          <Phone3D
             className="absolute inset-x-[-15%] inset-y-0"
             cameraZ={8.6}
             motion={{ rotateX: stageRotX, rotateY: stageRotY, lift }}

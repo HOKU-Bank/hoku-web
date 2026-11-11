@@ -59,7 +59,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
-        <link rel="preload" href="/models/iphone17pro.glb" as="fetch" crossOrigin="anonymous" />
+        {/* desktops render the 3D model; phones and tablets show a still instead */}
+        <link rel="preload" href="/models/iphone17pro.glb" as="fetch" crossOrigin="anonymous" media="(min-width: 1024px) and (pointer: fine)" />
+        <link rel="preload" href="/models/phone-still.webp" as="image" media="(max-width: 1023px), (pointer: coarse)" />
       </head>
       <body className="min-h-full font-sans">
         {children}

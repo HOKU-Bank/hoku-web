@@ -1,5 +1,6 @@
 "use client";
 
+import { Phone3D } from "./Phone3D";
 import {
   motion,
   useMotionValueEvent,
@@ -8,12 +9,9 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
-import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import { Screen } from "./Phone";
 import { AgentsScreen, ChatCard, ChatScreen, type ChatMsg } from "./screens";
-
-const PhoneModel = dynamic(() => import("./PhoneModel").then((m) => m.PhoneModel), { ssr: false });
 
 type Scene = {
   id: string;
@@ -228,7 +226,7 @@ function SpinningPhone({ progress }: { progress: MotionValue<number> }) {
         className="absolute left-1/2 top-1/2 hidden h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/10 lg:block"
       />
 
-      <PhoneModel
+      <Phone3D
         className="absolute inset-0"
         cameraZ={11}
         motion={{ rotateY: displayY, rotateX, rotateZ, scale, lift }}

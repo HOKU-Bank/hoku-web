@@ -247,6 +247,13 @@ body {
   50% { transform: translate3d(-5%, 4%, 0) scale(0.95); }
 }
 
+/* gentle hover of the still phone on mobile (compositor-only) */
+@keyframes phone-float {
+  0%, 100% { transform: translate3d(0, -4px, 0); }
+  50% { transform: translate3d(0, 4px, 0); }
+}
+.phone-float { animation: phone-float 7s ease-in-out infinite; }
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
