@@ -17,7 +17,9 @@ export default function Privacy() {
           Hoku Group, Warsaw, Poland.
         </p>
         <p>
-          This website does not use tracking cookies.
+          This website does not use tracking cookies. We count page views with
+          Vercel Web Analytics, which works without cookies and does not
+          identify individual visitors.
         </p>
         <p>
           <strong className="text-white">Contact form.</strong> When you write to
