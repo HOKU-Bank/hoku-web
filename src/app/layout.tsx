@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { themeBootScript } from "@/components/ThemeSwitcher";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,10 +22,31 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
 });
 
+const title = "Hoku Bank | Building the European Innovation Bank";
+const description =
+  "Agentic banking and credit for Europe's innovators. One account for banking, credit and treasury, run by AI agents within the mandate your CFO sets.";
+
 export const metadata: Metadata = {
-  title: "Hoku Bank | Building the European Innovation Bank",
-  description:
-    "Agentic banking and credit for Europe's innovators. One account for banking, credit and treasury, run by AI agents within the mandate your CFO sets.",
+  metadataBase: new URL("https://www.hokubank.com"),
+  title,
+  description,
+  applicationName: "Hoku Bank",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Hoku Bank",
+    title,
+    description,
+    locale: "en_GB",
+  },
+  twitter: { card: "summary_large_image", title, description },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#06060b",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -42,6 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full font-sans">
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

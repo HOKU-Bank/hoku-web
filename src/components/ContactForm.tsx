@@ -4,11 +4,6 @@ import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
-// Supabase project that stores contact requests. The publishable key is
-// public by design: the table only accepts inserts (RLS), nobody can read it.
-const SUPABASE_URL = "https://qubepslsvdxwkkihicmo.supabase.co";
-const SUPABASE_KEY = "sb_publishable_gcLU2auUlyQo1wpi7tFOAA_gsHxnZ7D";
-
 type Status = "idle" | "sending" | "done" | "error";
 
 const ROLES = [
@@ -40,17 +35,13 @@ export function ContactForm() {
       role,
       message: String(form.get("message") ?? "").trim() || null,
       consent: form.get("consent") === "on",
-      source: "website",
+      website: String(form.get("website") ?? ""),
     };
 
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_requests`, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          apikey: SUPABASE_KEY,
-          "Content-Type": "application/json",
-          Prefer: "return=minimal",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(row),
       });
       if (!res.ok) throw new Error(String(res.status));
@@ -87,6 +78,8 @@ export function ContactForm() {
           </motion.div>
         ) : (
           <motion.form key="form" onSubmit={onSubmit} exit={{ opacity: 0, scale: 0.98 }} className="space-y-4">
+            {/* honeypot for bots: hidden from people and screen readers */}
+            <input name="website" tabIndex={-1} autoComplete="off" aria-hidden className="absolute -left-[9999px] h-px w-px opacity-0" />
             <fieldset>
               <legend className="mb-1.5 text-sm text-white/60">I&apos;m reaching out as</legend>
               <div className="grid grid-cols-2 gap-1 rounded-xl border border-white/10 bg-white/[0.03] p-1 sm:grid-cols-4">

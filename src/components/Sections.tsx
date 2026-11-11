@@ -10,8 +10,8 @@ const ease = [0.16, 1, 0.3, 1] as const;
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32, filter: "blur(6px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.9, delay, ease }}
       className={className}
@@ -195,7 +195,7 @@ function WhyNow() {
 export function Vision() {
   return (
     <section id="vision" className="relative overflow-x-clip px-6 py-36">
-      <div aria-hidden className="pointer-events-none absolute -left-40 top-1/3 h-[480px] w-[640px] rounded-full bg-[var(--orb)] blur-[130px]" />
+      <div aria-hidden className="pointer-events-none absolute -left-40 top-1/3 h-[480px] w-[640px] rounded-full bg-[radial-gradient(closest-side,var(--orb),transparent)] blur-[130px] glow" />
       <div className="relative mx-auto max-w-6xl">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-end">
           <Reveal>
@@ -263,7 +263,7 @@ export function Platform() {
   return (
     <section id="platform" className="relative overflow-hidden px-6 py-36">
       {/* light behind the glass */}
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-[55%] h-[520px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--orb)] opacity-70 blur-[120px]" />
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-[55%] h-[520px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,var(--orb),transparent)] opacity-70 blur-[120px] glow" />
 
       <div className="relative mx-auto max-w-6xl">
         <Reveal className="mx-auto max-w-3xl text-center">

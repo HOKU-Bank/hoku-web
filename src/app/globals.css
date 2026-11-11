@@ -201,6 +201,17 @@ body {
   }
 }
 
+/* Soft glows: on phones and tablets drop the huge blur filters and drifting
+   animations (the gradients alone read almost the same) so mobile GPUs keep
+   up with scrolling. */
+@media (max-width: 1023px), (pointer: coarse) {
+  .glow {
+    filter: none !important;
+    animation: none !important;
+    will-change: auto !important;
+  }
+}
+
 /* Frosted glass panel used across the page */
 .glass {
   background: var(--glass-bg);

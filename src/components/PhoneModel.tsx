@@ -3,7 +3,7 @@
 import { Environment, Lightformer, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useInView, type MotionValue } from "motion/react";
-import { Suspense, useLayoutEffect, useMemo, useRef, type ReactNode, type RefObject } from "react";
+import { Suspense, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import * as THREE from "three";
 
 const MODEL = "/models/iphone17pro.glb";
@@ -166,9 +166,9 @@ function Iphone({ motion, screenRef }: { motion: PhoneMotion; screenRef: RefObje
   );
 }
 
-function Studio() {
+function Studio({ lite }: { lite: boolean }) {
   return (
-    <Environment resolution={256} frames={1}>
+    <Environment resolution={lite ? 128 : 256} frames={1}>
       <group rotation={[-Math.PI / 3, 0, 0]}>
         <Lightformer form="rect" intensity={3} position={[0, 6, -4]} scale={[10, 3, 1]} />
         <Lightformer form="rect" intensity={2} rotation-y={Math.PI / 2} position={[-6, 1, 0]} scale={[8, 2, 1]} />
@@ -197,11 +197,16 @@ export function PhoneModel({
   const hostRef = useRef<HTMLDivElement>(null);
   // Only spend GPU time while the phone is (nearly) on screen.
   const visible = useInView(hostRef, { margin: "200px 0px" });
+  // Phones: fewer pixels and a smaller light probe; the model looks the same
+  // at arm's length but costs far less GPU time per frame.
+  const [lite] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches,
+  );
   return (
     <div ref={hostRef} className={`isolate overflow-hidden ${className}`}>
       <Canvas
         frameloop={visible ? "always" : "never"}
-        dpr={[1, 1.5]}
+        dpr={lite ? [1, 1.25] : [1, 1.5]}
         camera={{ position: [0, 0, cameraZ], fov: 26 }}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance", toneMapping: THREE.ACESFilmicToneMapping }}
         style={{ pointerEvents: "none" }}
@@ -211,7 +216,7 @@ export function PhoneModel({
         <directionalLight position={[-4, -2, -5]} intensity={0.6} color="#9aa6ff" />
         <Suspense fallback={null}>
           <Iphone motion={motion} screenRef={screenRef} />
-          <Studio />
+          <Studio lite={lite} />
         </Suspense>
       </Canvas>
       <div

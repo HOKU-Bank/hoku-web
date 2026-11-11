@@ -153,12 +153,12 @@ function SceneText({ scene, index }: { scene: Scene; index: number }) {
     <div className="flex min-h-[100svh] flex-col justify-end pb-[6svh] lg:justify-center lg:pb-0">
       <div className="relative">
         {/* light behind the glass so the frosting has something to bend */}
-        <div aria-hidden className="pointer-events-none absolute -left-10 top-6 h-40 w-40 rounded-full bg-[var(--orb)] blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-6 right-6 h-32 w-56 rounded-full bg-[var(--orb)] opacity-60 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -left-10 top-6 h-40 w-40 rounded-full bg-[radial-gradient(closest-side,var(--orb),transparent)] blur-3xl glow" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-6 right-6 h-32 w-56 rounded-full bg-[radial-gradient(closest-side,var(--orb),transparent)] opacity-60 blur-3xl glow" />
 
         <motion.div
-          initial={{ opacity: 0, y: 40, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="liquid-glass rounded-[32px] p-7 sm:p-10"
@@ -218,7 +218,7 @@ function SpinningPhone({ progress }: { progress: MotionValue<number> }) {
     <div className="absolute inset-x-0 top-0 h-[64svh] lg:inset-0 lg:h-full">
       <div
         aria-hidden
-        className="absolute left-1/2 top-1/2 h-[520px] w-[520px] max-w-[100vw] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[110px] transition-[background] duration-1000"
+        className="absolute left-1/2 top-1/2 h-[520px] w-[520px] max-w-[100vw] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[110px] glow transition-[background] duration-1000"
         style={{ background: `radial-gradient(closest-side, ${GLOWS[active]}, transparent)` }}
       />
       {/* orbit ring */}
