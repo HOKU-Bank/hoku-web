@@ -32,7 +32,15 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // hoku-web.vercel.app serves the same site; only www.hokubank.com should be indexed.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "(?<sub>.*)\\.vercel\\.app" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex" }],
+      },
+    ];
   },
   cacheComponents: true,
   partialPrefetching: true,

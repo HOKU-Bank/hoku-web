@@ -341,10 +341,10 @@ export function Platform() {
 /* ------------------------------------------------------------------ */
 
 const TEAM = [
-  { name: "Maciej Jarząb", role: "Co-founder & CEO", photo: "/team/jarzab.jpg", bio: "Founded and sold Braight, AI credit scoring for 3 of Poland's 5 largest banks. Forbes 30 Under 30." },
-  { name: "Tomasz Sekutowicz", role: "Co-founder & COO", photo: "/team/sekutowicz.jpg", bio: "Nearly 30 years in payments. Built the FUPS EMI licence in Vilnius; ex-Tietoevry Banking." },
-  { name: "Maciej Żukowski", role: "CFO", photo: "/team/zukowski.jpg", bio: "Ex-Director of Tax at PKO BP, ex-President of PKO Finance AB, ex-Ministry of Finance." },
-  { name: "Tomasz Mielnicki", role: "CCO", photo: "/team/mielnicki.jpg", bio: "20 years in bank compliance. Chairs the Polish Bank Association's identification group." },
+  { name: "Maciej Jarząb", role: "Co-founder & CEO", photo: "/team/jarzab.webp", bio: "Founded and sold Braight, AI credit scoring for 3 of Poland's 5 largest banks. Forbes 30 Under 30." },
+  { name: "Tomasz Sekutowicz", role: "Co-founder & COO", photo: "/team/sekutowicz.webp", bio: "Nearly 30 years in payments. Built the FUPS EMI licence in Vilnius; ex-Tietoevry Banking." },
+  { name: "Maciej Żukowski", role: "CFO", photo: "/team/zukowski.webp", bio: "Ex-Director of Tax at PKO BP, ex-President of PKO Finance AB, ex-Ministry of Finance." },
+  { name: "Tomasz Mielnicki", role: "CCO", photo: "/team/mielnicki.webp", bio: "20 years in bank compliance. Chairs the Polish Bank Association's identification group." },
 ];
 
 export function Team() {
@@ -366,7 +366,11 @@ export function Team() {
                 <div data-theme="dark" className="relative aspect-[4/5] overflow-hidden rounded-2xl text-white">
                   <img
                     src={m.photo}
-                    alt={m.name}
+                    alt={`${m.name}, ${m.role} at Hoku Bank`}
+                    width={640}
+                    height={800}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0f]/80 via-transparent to-transparent" />
@@ -416,7 +420,7 @@ export function Footer() {
     <footer className="border-t border-white/10 px-6 py-14 text-sm text-white/45">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:justify-between">
         <div className="max-w-md">
-          <img src="/brand/hoku-bank-logo-dark.svg" alt="Hoku Bank" className="h-14 w-auto opacity-90" />
+          <img src="/brand/hoku-bank-logo-dark.svg" alt="Hoku Bank" width={340} height={170} loading="lazy" className="h-14 w-auto opacity-90" />
           <p className="mt-5 leading-relaxed">
             Hoku Bank is preparing an application for a credit institution licence
             and does not currently provide banking or other regulated services.

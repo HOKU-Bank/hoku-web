@@ -52,7 +52,7 @@ export function HeroScreen() {
     <div className="flex h-full flex-col px-4 pt-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src="/brand/hoku-star-white.svg" alt="" className="h-4 w-auto" />
+          <img src="/brand/hoku-star-white.svg" alt="" width={188} height={270} className="h-4 w-auto" />
           <span className="text-[13px] font-semibold tracking-wide">Business</span>
         </div>
         <span className="flex items-center gap-1.5 rounded-full bg-emerald-400/15 px-2 py-0.5 text-[10px] font-medium text-emerald-300">
@@ -177,7 +177,7 @@ export function ChatScreen({ title, messages }: { title: string; messages: ChatM
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 border-b border-white/[0.06] px-4 pb-3 pt-6">
         <span className="grid h-8 w-8 place-items-center rounded-full bg-white/12 ring-1 ring-white/25">
-          <img src="/brand/hoku-star-white.svg" alt="" className="h-3.5 w-auto" />
+          <img src="/brand/hoku-star-white.svg" alt="" width={188} height={270} className="h-3.5 w-auto" />
         </span>
         <div>
           <p className="text-[12.5px] font-semibold leading-tight">Autopilot</p>
@@ -323,7 +323,7 @@ export function AgentsScreen() {
     <div className="flex h-full flex-col px-4 pt-6">
       <div className="flex items-center gap-2.5">
         <span className="grid h-8 w-8 place-items-center rounded-full bg-white/12 ring-1 ring-white/25">
-          <img src="/brand/hoku-star-white.svg" alt="" className="h-3.5 w-auto" />
+          <img src="/brand/hoku-star-white.svg" alt="" width={188} height={270} className="h-3.5 w-auto" />
         </span>
         <div>
           <p className="text-[12.5px] font-semibold leading-tight">Autopilot agents</p>

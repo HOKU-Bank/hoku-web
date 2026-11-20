@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { themeBootScript } from "@/components/ThemeSwitcher";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,21 +28,26 @@ const description =
   "Agentic banking and credit for Europe's innovators. One account for banking, credit and treasury, run by AI agents within the mandate your CFO sets.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.hokubank.com"),
-  title,
+  metadataBase: new URL(SITE_URL),
+  title: { default: title, template: `%s | ${SITE_NAME}` },
   description,
-  applicationName: "Hoku Bank",
-  alternates: { canonical: "/" },
+  applicationName: SITE_NAME,
   openGraph: {
     type: "website",
     url: "/",
-    siteName: "Hoku Bank",
+    siteName: SITE_NAME,
     title,
     description,
     locale: "en_GB",
   },
   twitter: { card: "summary_large_image", title, description },
-  robots: { index: true, follow: true },
+  // Search engine ownership checks (the meta-tag method). Set the token in the
+  // Vercel project's environment variables and redeploy: GOOGLE_SITE_VERIFICATION
+  // for Google Search Console, BING_SITE_VERIFICATION for Bing Webmaster Tools.
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
+  },
 };
 
 export const viewport: Viewport = {

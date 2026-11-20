@@ -110,45 +110,37 @@ export function Hero() {
         className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-6"
       >
         <div className="text-center lg:text-left">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease }}
-            className="glass mx-auto inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs text-white/80 lg:mx-0"
+          <p
+            style={{ animationDelay: "0s" }}
+            className="rise glass mx-auto inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs text-white/80 lg:mx-0"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-sky" />
             Building the European Innovation Bank
-          </motion.p>
+          </p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 1, ease }}
-            className="mt-7 text-[clamp(2.75rem,7vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.045em]"
+          <h1
+            style={{ animationDelay: "0.1s" }}
+            className="rise-lcp mt-7 text-[clamp(2.75rem,7vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.045em]"
           >
             Banking that
             <br />
             <span className="text-gradient">
               runs itself.
             </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 1, ease }}
-            className="mx-auto mt-7 max-w-md text-lg leading-relaxed text-white/65 lg:mx-0"
+          <p
+            style={{ animationDelay: "0.2s" }}
+            className="rise mx-auto mt-7 max-w-md text-lg leading-relaxed text-white/65 lg:mx-0"
           >
             Agentic banking and credit for Europe&apos;s innovators. Set the
             mandate once. Autopilot pays, collects, invests and finds you
             capital, around the clock.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 1, ease }}
-            className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
+          <div
+            style={{ animationDelay: "0.3s" }}
+            className="rise mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
           >
             <a
               href="#contact"
@@ -163,7 +155,7 @@ export function Hero() {
             >
               See Autopilot at work
             </a>
-          </motion.div>
+          </div>
         </div>
 
         <motion.div
