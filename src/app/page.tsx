@@ -22,7 +22,7 @@ const organization = {
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/brand/hoku-icon-512.png`,
   description:
-    "Hoku is a Warsaw-based company building an agentic neobank for Europe's innovative companies. Hoku is not a bank and does not provide regulated services.",
+    "Hoku is a Warsaw-based company building an agentic finance platform for Europe's innovative companies. Hoku is not a bank and does not provide regulated services.",
   address: { "@type": "PostalAddress", addressLocality: "Warsaw", addressCountry: "PL" },
   ...(LINKEDIN_URL ? { sameAs: [LINKEDIN_URL] } : {}),
 };

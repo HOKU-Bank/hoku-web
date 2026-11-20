@@ -204,14 +204,14 @@ export function Vision() {
             <h2 className="mt-5 text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[1] tracking-[-0.045em]">
               Europe doesn&apos;t lack innovation.
               <br />
-              <span className="text-gradient">It lacks a neobank built for it.</span>
+              <span className="text-gradient">It lacks a financial partner built for it.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="text-lg leading-relaxed text-white/65">
               Technology SMEs are too big for consumer fintech apps, too small for
               a debt fund and too asset-light for a traditional bank. We are building
-              the European neobank that finances them on live data, run by
+              the European financial platform that finances them on live data, run by
               AI agents from day one.
             </p>
             <div className="mt-6 flex items-baseline gap-3">
@@ -416,7 +416,7 @@ export function Access() {
       <Aurora />
       <Reveal className="relative mx-auto max-w-3xl text-center">
         <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.045em]">
-          The neobank Europe&apos;s
+          The financial partner Europe&apos;s
           <br />
           <span className="text-gradient">innovators deserve.</span>
         </h2>
