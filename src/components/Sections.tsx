@@ -4,6 +4,7 @@ import { animate, motion, useInView, useMotionValue, useScroll, useTransform } f
 import { useEffect, useRef } from "react";
 import { Aurora } from "./Aurora";
 import { ContactForm } from "./ContactForm";
+import { LINKEDIN_URL } from "@/lib/site";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -340,11 +341,12 @@ export function Platform() {
 
 /* ------------------------------------------------------------------ */
 
-const TEAM = [
-  { name: "Maciej Jarząb", role: "Co-founder & CEO", photo: "/team/jarzab.webp", bio: "Founded and sold Braight, AI credit scoring for 3 of Poland's 5 largest banks. Forbes 30 Under 30." },
-  { name: "Tomasz Sekutowicz", role: "Co-founder & COO", photo: "/team/sekutowicz.webp", bio: "30 years in payments technology and management. Fintech licences, e.g. FUPS; ex-Tieto Banktech." },
-  { name: "Maciej Żukowski", role: "CFO", photo: "/team/zukowski.webp", bio: "Ex-Director of Tax at PKO BP, ex-President of PKO Finance AB, ex-Ministry of Finance." },
-  { name: "Tomasz Mielnicki", role: "CSCO", photo: "/team/mielnicki.webp", bio: "Chief Security & Compliance Officer. 20 years in security and compliance, e.g. at the EC and ZBP." },
+// linkedin: personal profile, omitted when not confirmed.
+const TEAM: { name: string; role: string; photo: string; bio: string; linkedin?: string }[] = [
+  { name: "Maciej Jarząb", linkedin: "https://www.linkedin.com/in/maciej-jarzab/", role: "Co-founder & CEO", photo: "/team/jarzab.webp", bio: "Founded and sold Braight, AI credit scoring for 3 of Poland's 5 largest banks. Forbes 30 Under 30." },
+  { name: "Tomasz Sekutowicz", linkedin: "https://www.linkedin.com/in/tomasz-sekutowiczfintechceo/", role: "Co-founder & COO", photo: "/team/sekutowicz.webp", bio: "30 years in payments technology and management. Fintech licences, e.g. FUPS; ex-Tieto Banktech." },
+  { name: "Maciej Żukowski", linkedin: "https://www.linkedin.com/in/maciej-%C5%BCukowski-6003a464/", role: "CFO", photo: "/team/zukowski.webp", bio: "Ex-Director of Tax at PKO BP, ex-President of PKO Finance AB, ex-Ministry of Finance." },
+  { name: "Tomasz Mielnicki", linkedin: "https://www.linkedin.com/in/tomasz-mielnicki-1883b03/", role: "CSCO", photo: "/team/mielnicki.webp", bio: "Chief Security & Compliance Officer. 20 years in security and compliance, e.g. at the EC and ZBP." },
 ];
 
 export function Team() {
@@ -379,7 +381,20 @@ export function Team() {
                   </span>
                 </div>
                 <div className="px-2 pb-3 pt-4">
-                  <p className="text-lg font-semibold tracking-tight">{m.name}</p>
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-lg font-semibold tracking-tight">{m.name}</p>
+                    {m.linkedin && (
+                      <a
+                        href={m.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${m.name} on LinkedIn`}
+                        className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 text-white/55 transition hover:border-white/25 hover:text-white"
+                      >
+                        <LinkedInIcon className="h-3.5 w-3.5" />
+                      </a>
+                    )}
+                  </div>
                   <p className="mt-2 text-sm leading-relaxed text-white/55">{m.bio}</p>
                 </div>
               </div>
@@ -415,6 +430,14 @@ export function Access() {
   );
 }
 
+function LinkedInIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+    </svg>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="border-t border-white/10 px-6 py-14 text-sm text-white/45">
@@ -431,6 +454,15 @@ export function Footer() {
             <p className="text-white/70">Company</p>
             <a href="#team" className="block hover:text-white">Team</a>
             <a href={`mailto:${CONTACT}`} className="block hover:text-white">Contact</a>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-white"
+            >
+              <LinkedInIcon className="h-3.5 w-3.5" />
+              LinkedIn
+            </a>
           </div>
           <div className="space-y-2">
             <p className="text-white/70">Legal</p>

@@ -5,6 +5,5 @@
 export const SITE_URL = "https://www.hokubank.com";
 export const SITE_NAME = "Hoku Bank";
 
-// TODO: add the official company LinkedIn URL once the page exists, e.g.
-// "https://www.linkedin.com/company/hoku-bank". Left empty rather than guessed.
-export const LINKEDIN_URL = "";
+// Official company page on LinkedIn (footer link and structured data sameAs).
+export const LINKEDIN_URL = "https://www.linkedin.com/company/hoku-bank/";

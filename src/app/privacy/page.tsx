@@ -38,7 +38,8 @@ export default function Privacy() {
         </p>
         <p>
           The data is stored with our processor Supabase in the European Union
-          (Frankfurt). The website is hosted by Vercel.
+          (Frankfurt) and forwarded to our team by e-mail through our processor
+          Resend. The website is hosted by Vercel.
         </p>
         <p>
           If you contact us by e-mail, we process your name, e-mail address and
