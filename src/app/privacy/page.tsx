@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy policy",
   description:
-    "How Hoku handles personal data sent through hokubank.com: what the contact form collects, why, where it is stored and your rights under GDPR.",
+    "How Hoku handles personal data sent through hokubeta.com: what the contact form collects, why, where it is stored and your rights under GDPR.",
   alternates: { canonical: "/privacy" },
   // A page-level openGraph replaces the root one, so the share image is repeated here.
   openGraph: { url: "/privacy", title: "Privacy policy | Hoku", images: ["/opengraph-image.png"] },
