@@ -342,9 +342,9 @@ export function Platform() {
 
 const TEAM = [
   { name: "Maciej Jarząb", role: "Co-founder & CEO", photo: "/team/jarzab.webp", bio: "Founded and sold Braight, AI credit scoring for 3 of Poland's 5 largest banks. Forbes 30 Under 30." },
-  { name: "Tomasz Sekutowicz", role: "Co-founder & COO", photo: "/team/sekutowicz.webp", bio: "Nearly 30 years in payments. Built the FUPS EMI licence in Vilnius; ex-Tietoevry Banking." },
+  { name: "Tomasz Sekutowicz", role: "Co-founder & COO", photo: "/team/sekutowicz.webp", bio: "30 years in payments technology and management. Fintech licences, e.g. FUPS; ex-Tieto Banktech." },
   { name: "Maciej Żukowski", role: "CFO", photo: "/team/zukowski.webp", bio: "Ex-Director of Tax at PKO BP, ex-President of PKO Finance AB, ex-Ministry of Finance." },
-  { name: "Tomasz Mielnicki", role: "CCO", photo: "/team/mielnicki.webp", bio: "20 years in bank compliance. Chairs the Polish Bank Association's identification group." },
+  { name: "Tomasz Mielnicki", role: "CSCO", photo: "/team/mielnicki.webp", bio: "Chief Security & Compliance Officer. 20 years in security and compliance, e.g. at the EC and ZBP." },
 ];
 
 export function Team() {
