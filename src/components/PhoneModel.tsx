@@ -3,7 +3,7 @@
 import { Environment, Lightformer, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useInView, type MotionValue } from "motion/react";
-import { Suspense, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import * as THREE from "three";
 
 const MODEL = "/models/iphone17pro.glb";
@@ -69,7 +69,16 @@ function Iphone({ motion, screenRef }: { motion: PhoneMotion; screenRef: RefObje
   const { scene } = useGLTF(MODEL);
   const model = useMemo(() => scene.clone(true), [scene]);
   const group = useRef<THREE.Group>(null);
-  const { camera, size } = useThree();
+  const { camera, size, invalidate } = useThree();
+
+  // Render on demand: draw a frame only when one of the motion values moves
+  // (pointer, scroll, intro), not 60 times a second while the phone sits still.
+  useEffect(() => {
+    const values = [motion.rotateX, motion.rotateY, motion.rotateZ, motion.lift, motion.scale];
+    const offs = values.filter(Boolean).map((v) => v!.on("change", () => invalidate()));
+    invalidate();
+    return () => offs.forEach((off) => off());
+  }, [motion, invalidate]);
 
   useLayoutEffect(() => {
     model.traverse((o) => {
@@ -118,18 +127,17 @@ function Iphone({ motion, screenRef }: { motion: PhoneMotion; screenRef: RefObje
   const toCam = useMemo(() => new THREE.Vector3(), []);
   const pos = useMemo(() => new THREE.Vector3(), []);
 
-  useFrame((state) => {
+  useFrame(() => {
     const g = group.current;
     if (!g) return;
     const d = THREE.MathUtils.degToRad;
-    const t = state.clock.elapsedTime;
     g.rotation.set(
       d(motion.rotateX?.get() ?? 0),
       d(motion.rotateY?.get() ?? 0),
       d(motion.rotateZ?.get() ?? 0),
       "YXZ",
     );
-    g.position.y = (motion.lift?.get() ?? 0) + Math.sin(t * 0.9) * 0.06;
+    g.position.y = motion.lift?.get() ?? 0;
     g.scale.setScalar(motion.scale?.get() ?? 1);
 
     // Pin the live screen to the display: project its corners and stretch the
@@ -204,9 +212,11 @@ export function PhoneModel({
   );
   return (
     <div ref={hostRef} className={`isolate overflow-hidden ${className}`}>
+      {/* the gentle hover is a CSS transform on canvas and screen together, so it costs no WebGL frames */}
+      <div className="phone-float absolute inset-0">
       <Canvas
-        frameloop={visible ? "always" : "never"}
-        dpr={lite ? [1, 1.25] : [1, 1.5]}
+        frameloop={visible ? "demand" : "never"}
+        dpr={lite ? [1, 1.25] : [1, 1.35]}
         camera={{ position: [0, 0, cameraZ], fov: 26 }}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance", toneMapping: THREE.ACESFilmicToneMapping }}
         style={{ pointerEvents: "none" }}
@@ -226,6 +236,7 @@ export function PhoneModel({
         style={{ visibility: "hidden" }}
       >
         {screen}
+      </div>
       </div>
     </div>
   );

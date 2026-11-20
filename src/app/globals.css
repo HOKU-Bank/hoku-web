@@ -178,8 +178,8 @@ body {
   position: relative;
   background: var(--lg-bg);
   border: 1px solid var(--lg-border);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
   box-shadow: var(--lg-shadow);
 }
 
@@ -201,12 +201,14 @@ body {
   }
 }
 
-/* Soft glows: on phones and tablets drop the huge blur filters and drifting
-   animations (the gradients alone read almost the same) so mobile GPUs keep
-   up with scrolling. */
+/* Soft glows are radial gradients: a 100px+ blur filter on top of them cost a
+   full-screen GPU pass every frame for almost no visible difference, so it is
+   off everywhere. Phones and tablets also skip the slow drift. */
+.glow {
+  filter: none !important;
+}
 @media (max-width: 1023px), (pointer: coarse) {
   .glow {
-    filter: none !important;
     animation: none !important;
     will-change: auto !important;
   }
