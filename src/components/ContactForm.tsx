@@ -136,7 +136,7 @@ export function ContactForm() {
             <label className="flex items-start gap-3 pt-1 text-[13px] leading-relaxed text-white/50">
               <input name="consent" type="checkbox" required className="mt-0.5 h-4 w-4 shrink-0 accent-white" />
               <span>
-                I agree that Hoku Bank may store my details to reply to this message. See our{" "}
+                I agree that Hoku may store my details to reply to this message. See our{" "}
                 <Link href="/privacy" className="text-white/75 underline underline-offset-2 hover:text-white">
                   privacy policy
                 </Link>

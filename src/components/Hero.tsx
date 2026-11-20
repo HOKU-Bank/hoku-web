@@ -115,7 +115,7 @@ export function Hero() {
             className="rise glass mx-auto inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs text-white/80 lg:mx-0"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-sky" />
-            Building the European Innovation Bank
+            The agentic neobank for Europe&apos;s innovators
           </p>
 
           <h1

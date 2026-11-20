@@ -20,8 +20,8 @@ export function Nav() {
           scrolled ? "nav-solid" : "border border-transparent"
         }`}
       >
-        <a href="#" aria-label="Hoku Bank home">
-          <img src="/brand/hoku-logo-dark.svg" alt="Hoku Bank" width={340} height={146} className="h-[44px] w-auto sm:h-[56px]" />
+        <a href="#" aria-label="Hoku home">
+          <img src="/brand/hoku-logo-dark.svg" alt="Hoku" width={340} height={146} className="h-[44px] w-auto sm:h-[56px]" />
         </a>
         <div className="hidden flex-1 items-center justify-evenly px-8 text-[15px] text-white/65 md:flex lg:px-16">
           <a href="#autopilot" className="transition hover:text-white">Autopilot</a>

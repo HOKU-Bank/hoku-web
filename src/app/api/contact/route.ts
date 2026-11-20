@@ -54,7 +54,7 @@ async function notify(row: { name: string; email: string; organisation: string |
   const to = process.env.CONTACT_TO?.split(",").map((s) => s.trim()).filter(Boolean);
   if (!key || !to?.length) return;
 
-  const from = process.env.CONTACT_FROM || "Hoku Bank website <onboarding@resend.dev>";
+  const from = process.env.CONTACT_FROM || "Hoku website <onboarding@resend.dev>";
   const role = row.role[0].toUpperCase() + row.role.slice(1);
   const subject = `New contact: ${row.name} (${role}${row.organisation ? `, ${row.organisation}` : ""})`;
   const lines: [string, string][] = [

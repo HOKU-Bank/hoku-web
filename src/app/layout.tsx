@@ -23,7 +23,7 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
 });
 
-const title = "Hoku Bank | Building the European Innovation Bank";
+const title = "Hoku | The agentic neobank for Europe's innovators";
 const description =
   "Agentic banking and credit for Europe's innovators. One account for banking, credit and treasury, run by AI agents within the mandate your CFO sets.";
 

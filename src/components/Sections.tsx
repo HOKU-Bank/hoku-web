@@ -77,7 +77,7 @@ const WHY_NOW: { k: string; title: string; body: string; caption: string; bars: 
   {
     k: "€150B",
     title: "Europe is reindustrialising",
-    body: "The SAFE defence programme funds the orders. The thousands of SME suppliers who deliver them still need the working capital, guarantees and FX that only a bank provides.",
+    body: "The SAFE defence programme funds the orders. The thousands of SME suppliers who deliver them still need working capital, guarantees and FX, fast.",
     caption: "SAFE defence loans, € billions",
     max: 150,
     bars: [
@@ -89,7 +89,7 @@ const WHY_NOW: { k: string; title: string; body: string; caption: string; bars: 
   {
     k: "5%",
     title: "Payments alone don't pay",
-    body: "Digital banks proved the stack but not the economics. Credit is what pays, which is why Qonto and Mercury are now chasing bank licences. We start with one.",
+    body: "Digital banks proved the stack but not the economics. Credit is what pays, which is why Qonto and Mercury are now chasing bank licences. We plan for a licence from day one.",
     caption: "Digital banks' share of EU retail banking",
     max: 20,
     bars: [
@@ -100,12 +100,12 @@ const WHY_NOW: { k: string; title: string; body: string; caption: string; bars: 
   {
     k: "43%",
     title: "AI made underwriting cheap",
-    body: "Agents handle onboarding, credit memos and AML triage for cents. Small-ticket business lending becomes profitable, and the bank runs leaner than any incumbent.",
+    body: "Agents handle onboarding, credit memos and AML triage for cents. Small-ticket business lending becomes profitable, and Hoku runs leaner than any incumbent.",
     caption: "Cost-to-income ratio",
     max: 60,
     bars: [
       { label: "EU bank average", value: 52.3, display: "52.3%" },
-      { label: "Hoku Bank, Year 5 plan", value: 43, display: "43%", strong: true },
+      { label: "Hoku, Year 5 plan", value: 43, display: "43%", strong: true },
     ],
   },
 ];
@@ -204,14 +204,14 @@ export function Vision() {
             <h2 className="mt-5 text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[1] tracking-[-0.045em]">
               Europe doesn&apos;t lack innovation.
               <br />
-              <span className="text-gradient">It lacks a bank built for it.</span>
+              <span className="text-gradient">It lacks a neobank built for it.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="text-lg leading-relaxed text-white/65">
-              Technology SMEs are too big for a neobank, too small for a debt
-              fund and too asset-light for a traditional bank. We are building
-              the licensed European bank that finances them on live data, run by
+              Technology SMEs are too big for consumer fintech apps, too small for
+              a debt fund and too asset-light for a traditional bank. We are building
+              the European neobank that finances them on live data, run by
               AI agents from day one.
             </p>
             <div className="mt-6 flex items-baseline gap-3">
@@ -276,7 +276,7 @@ export function Platform() {
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg text-white/65">
             Built for the technology SMEs and venture-backed startups that are too
-            big for a neobank and too asset-light for a traditional bank.
+            big for consumer fintech apps and too asset-light for a traditional bank.
           </p>
         </Reveal>
 
@@ -368,7 +368,7 @@ export function Team() {
                 <div data-theme="dark" className="relative aspect-[4/5] overflow-hidden rounded-2xl text-white">
                   <img
                     src={m.photo}
-                    alt={`${m.name}, ${m.role} at Hoku Bank`}
+                    alt={`${m.name}, ${m.role} at Hoku`}
                     width={640}
                     height={800}
                     loading="lazy"
@@ -416,7 +416,7 @@ export function Access() {
       <Aurora />
       <Reveal className="relative mx-auto max-w-3xl text-center">
         <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.045em]">
-          The bank Europe&apos;s
+          The neobank Europe&apos;s
           <br />
           <span className="text-gradient">innovators deserve.</span>
         </h2>
@@ -443,10 +443,17 @@ export function Footer() {
     <footer className="border-t border-white/10 px-6 py-14 text-sm text-white/45">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:justify-between">
         <div className="max-w-md">
-          <img src="/brand/hoku-bank-logo-dark.svg" alt="Hoku Bank" width={340} height={170} loading="lazy" className="h-14 w-auto opacity-90" />
+          <img src="/brand/hoku-logo-dark.svg" alt="Hoku" width={340} height={146} loading="lazy" className="h-12 w-auto opacity-90" />
+          {/* TODO(legal): compliance to approve this wording before launch. */}
           <p className="mt-5 leading-relaxed">
-            Hoku Bank is preparing an application for a credit institution licence
-            and does not currently provide banking or other regulated services.
+            Hoku is not a bank. Hoku Group intends to apply for authorisation as a
+            specialised credit institution in the Republic of Latvia under the
+            Latvian Credit Institution Law (Kredītiestāžu likums). In the euro area
+            such licences are granted by the European Central Bank on a proposal
+            from Latvijas Banka, which would be Hoku&apos;s home supervisor. Until a
+            licence is granted, Hoku does not accept deposits or provide banking or
+            other regulated services, and nothing on this website is an offer of
+            such services.
           </p>
         </div>
         <div className="flex gap-16">

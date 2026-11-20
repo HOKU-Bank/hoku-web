@@ -15,7 +15,7 @@ export default function NotFound() {
         href="/"
         className="mt-9 inline-flex h-12 items-center rounded-full bg-white px-6 text-sm font-semibold text-black transition hover:bg-white/90"
       >
-        Back to Hoku Bank
+        Back to Hoku
       </Link>
     </main>
   );

@@ -4,11 +4,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy policy",
   description:
-    "How Hoku Bank handles personal data sent through hokubank.com: what the contact form collects, why, where it is stored and your rights under GDPR.",
+    "How Hoku handles personal data sent through hokubank.com: what the contact form collects, why, where it is stored and your rights under GDPR.",
   alternates: { canonical: "/privacy" },
   // A page-level openGraph replaces the root one, so the share image is repeated here.
-  openGraph: { url: "/privacy", title: "Privacy policy | Hoku Bank", images: ["/opengraph-image.png"] },
-  twitter: { card: "summary_large_image", title: "Privacy policy | Hoku Bank", images: ["/twitter-image.png"] },
+  openGraph: { url: "/privacy", title: "Privacy policy | Hoku", images: ["/opengraph-image.png"] },
+  twitter: { card: "summary_large_image", title: "Privacy policy | Hoku", images: ["/twitter-image.png"] },
 };
 
 // TODO: replace with the final policy approved by legal (controller details, KRS, DPO contact).
